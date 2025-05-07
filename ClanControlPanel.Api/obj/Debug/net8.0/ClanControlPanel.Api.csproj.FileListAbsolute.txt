@@ -50,3 +50,4 @@ C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Api\bin\Debug\net
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Api\bin\Debug\net8.0\ClanControlPanel.Application.pdb
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Api\bin\Debug\net8.0\ClanControlPanel.Core.pdb
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Api\bin\Debug\net8.0\ClanControlPanel.Infrastructure.pdb
+C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Api\obj\Debug\net8.0\ClanControlPanel.Api.sourcelink.json

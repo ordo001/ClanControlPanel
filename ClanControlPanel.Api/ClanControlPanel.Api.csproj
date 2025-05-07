@@ -14,6 +14,9 @@
       <ProjectReference Include="..\..\..\Desktop\WebApiСontrolPanel\ClanControlPanel.Application\ClanControlPanel.Application.csproj" />
       <ProjectReference Include="..\..\..\Desktop\WebApiСontrolPanel\ClanControlPanel.Core\ClanControlPanel.Core.csproj" />
       <ProjectReference Include="..\..\..\Desktop\WebApiСontrolPanel\ClanControlPanel.Infrastructure\ClanControlPanel.Infrastructure.csproj" />
+      <ProjectReference Include="..\ClanControlPanel.Application\ClanControlPanel.Application.csproj" />
+      <ProjectReference Include="..\ClanControlPanel.Core\ClanControlPanel.Core.csproj" />
+      <ProjectReference Include="..\ClanControlPanel.Infrastructure\ClanControlPanel.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

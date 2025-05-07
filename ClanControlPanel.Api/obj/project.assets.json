@@ -1514,18 +1514,18 @@
     },
     "ClanControlPanel.Application/1.0.0": {
       "type": "project",
-      "path": "../../../Desktop/WebApiСontrolPanel/ClanControlPanel.Application/ClanControlPanel.Application.csproj",
-      "msbuildProject": "../../../Desktop/WebApiСontrolPanel/ClanControlPanel.Application/ClanControlPanel.Application.csproj"
+      "path": "../ClanControlPanel.Application/ClanControlPanel.Application.csproj",
+      "msbuildProject": "../ClanControlPanel.Application/ClanControlPanel.Application.csproj"
     },
     "ClanControlPanel.Core/1.0.0": {
       "type": "project",
-      "path": "../../../Desktop/WebApiСontrolPanel/ClanControlPanel.Core/ClanControlPanel.Core.csproj",
-      "msbuildProject": "../../../Desktop/WebApiСontrolPanel/ClanControlPanel.Core/ClanControlPanel.Core.csproj"
+      "path": "../ClanControlPanel.Core/ClanControlPanel.Core.csproj",
+      "msbuildProject": "../ClanControlPanel.Core/ClanControlPanel.Core.csproj"
     },
     "ClanControlPanel.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../../../Desktop/WebApiСontrolPanel/ClanControlPanel.Infrastructure/ClanControlPanel.Infrastructure.csproj",
-      "msbuildProject": "../../../Desktop/WebApiСontrolPanel/ClanControlPanel.Infrastructure/ClanControlPanel.Infrastructure.csproj"
+      "path": "../ClanControlPanel.Infrastructure/ClanControlPanel.Infrastructure.csproj",
+      "msbuildProject": "../ClanControlPanel.Infrastructure/ClanControlPanel.Infrastructure.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1571,6 +1571,15 @@
             },
             "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj": {
               "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj"
+            },
+            "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj": {
+              "projectPath": "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj"
+            },
+            "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj": {
+              "projectPath": "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj"
+            },
+            "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj"
             }
           }
         }
