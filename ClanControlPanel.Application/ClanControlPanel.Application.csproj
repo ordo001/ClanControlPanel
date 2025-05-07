@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClanControlPanel.Core\ClanControlPanel.Core.csproj" />
+    <ProjectReference Include="..\ClanControlPanel.Infrastructure\ClanControlPanel.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

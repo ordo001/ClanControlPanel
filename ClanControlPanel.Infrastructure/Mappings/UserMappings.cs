@@ -11,44 +11,24 @@ namespace ClanControlPanel.Infrastructure.Mappings
 {
     public static class UserMappings
     {
-        public static User MapToDto(this UserDb user)
+        public static Core.Models.User ToDomain(this UserDb user)
         {
-            var ToDTO = new User(user.Login, user.PasswordHash, user.Name);
+            var toDomain = new User(user.Login, user.PasswordHash, user.Name);
 
-            return ToDTO;
+            return toDomain;
         }
 
-        public static UserDb MapToEntity(this User user)
+        public static UserDb ToEntity(this Core.Models.User user)
         {
-            var ToEntity = new UserDb
-            {
+            var toEntity = new UserDb{
+                Id = user.Id,
                 Login = user.Login,
                 PasswordHash = user.PasswordHash,
                 Name = user.Name
+                
             };
 
-            return ToEntity;
-        }
-
-        public static List<User> MapToDtoList(this List<UserDb> userList)
-        {
-            return userList.Select(user => user.MapToDto()).ToList();
-        }
-
-        public static UserResponse MapToDtoUserResponse(this UserDb user)
-        {
-            var ToDTO = new UserResponse
-            {
-                IdUser = user.IdUser,
-                Login = user.Login,
-                Name = user.Name
-            };
-            return ToDTO;
-        }
-
-        public static List<UserResponse> MapToDtoListUserResponse(this List<UserDb> userList)
-        {
-            return userList.Select(user => user.MapToDtoUserResponse()).ToList();
+            return toEntity;
         }
     } 
 }

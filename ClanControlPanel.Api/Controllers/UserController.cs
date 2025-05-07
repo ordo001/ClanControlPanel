@@ -1,78 +1,85 @@
-﻿using ClanControlPanel.Application.Servises;
-using ClanControlPanel.Core.DTO;
+﻿using ClanControlPanel.Core.DTO;
 using ClanControlPanel.Core.Interfaces.Services;
-using ClanControlPanel.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace WebApiСontrolPanel.Api.Controllers
+namespace ClanControlPanel.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class UserController(IUserServices userServise, IConfiguration config) : ControllerBase
+    public class UserController(IUserServices userServise, IValidatorService validator, IConfiguration config) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAllUser()
+        public async Task<IActionResult> GetUsers()
         {
 
-            var userList = await userServise.GetAllUser();
-
-            return Ok(userList);
+            try
+            {
+                var userList = await userServise.GetUsers();
+                return Ok(userList);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveUser(int id)
+        public async Task<IActionResult> RemoveUser(Guid id)
         {
-            await userServise.RemoveUserById(id);
-            return Ok();
+            try
+            {
+                await userServise.RemoveUserById(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterUserRequest registerUserRequest)
         {
-            var validationResult = registerUserRequest.Validation(registerUserRequest);
+            var validationResult = validator.ValidationEntity(registerUserRequest);
             if (validationResult.Any())
             {
                 return BadRequest(validationResult);
             }
 
-            var result = await userServise.Register(
-                registerUserRequest.Login,
-                registerUserRequest.Password,
-                registerUserRequest.Name);
-
-            if (result is null)
-            {
-                return BadRequest("Логин занят");
-            }
-            return Ok(result);
-        }
-
-        [HttpPatch("update")]
-        public async Task<IActionResult> Update([FromBody] UpdateUserRequest updateUserRequest)
-        {
-            var task = userServise.UpdateUser(updateUserRequest.Id, updateUserRequest.Name, updateUserRequest.Login, updateUserRequest.Password);
             try
             {
-                await task;
-                //var result = Task.WhenAny(task);
-                //Task.WhenAny(task);
-                //if(result.Exception is not null)
-                    //throw result.Exception.InnerException;
+                var result = await userServise.Register(
+                    registerUserRequest.Login,
+                    registerUserRequest.Password,
+                    registerUserRequest.Name);
+
+                if (result is null)
+                {
+                    return BadRequest("Логин занят");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message); 
+            }
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> Update([FromBody] UpdateUserRequest updateUserRequest)
+        {
+            try
+            {
+                await userServise.UpdateUser(updateUserRequest.Id, updateUserRequest.Name, updateUserRequest.Login, updateUserRequest.Password);
                 return Ok();
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest(task.Exception?.InnerException?.Message);
+                return BadRequest(ex.Message);
             }
-            // TODO: Сделать обработку исключений, но до этого создать кастомные
-            //return Ok();
         }
     }
 }

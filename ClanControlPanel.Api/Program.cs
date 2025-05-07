@@ -1,3 +1,9 @@
+using ClanControlPanel.Application.Servises;
+using ClanControlPanel.Application.Settings;
+using ClanControlPanel.Core.Interfaces.Services;
+using ClanControlPanel.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace ClanControlPanel.Api;
 
 public class Program
@@ -9,13 +15,22 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        
+        builder.Services.AddScoped<IUserServices, UserServise>();
+        builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+        builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
+        builder.Services.AddScoped<IValidatorService, ValidatorService>();
+        //builder.Services.AddScoped <ControlPanelContext>();
+        builder.Services.Configure<AuthSettings>(builder.Configuration.GetSection("AuthSettings"));
+        builder.Services.AddAuth(builder.Configuration);
+
+        builder.Services.AddDbContext<ClanControlPanelContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
+        
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

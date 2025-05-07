@@ -507,6 +507,7 @@
         "dependencies": {
           "BCrypt.Net-Next": "4.0.3",
           "ClanControlPanel.Core": "1.0.0",
+          "ClanControlPanel.Infrastructure": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.0"
         },
         "compile": {
@@ -530,7 +531,6 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "ClanControlPanel.Application": "1.0.0",
           "ClanControlPanel.Core": "1.0.0",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0"
@@ -1533,6 +1533,7 @@
       "ClanControlPanel.Application >= 1.0.0",
       "ClanControlPanel.Core >= 1.0.0",
       "ClanControlPanel.Infrastructure >= 1.0.0",
+      "Npgsql.EntityFrameworkCore.PostgreSQL >= 8.0.0",
       "Swashbuckle.AspNetCore >= 6.4.0"
     ]
   },
@@ -1563,15 +1564,6 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj": {
-              "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj"
-            },
-            "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj": {
-              "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj"
-            },
-            "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj"
-            },
             "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj": {
               "projectPath": "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj"
             },
@@ -1599,6 +1591,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Npgsql.EntityFrameworkCore.PostgreSQL": {
+            "target": "Package",
+            "version": "[8.0.0, )"
+          },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.4.0, )"

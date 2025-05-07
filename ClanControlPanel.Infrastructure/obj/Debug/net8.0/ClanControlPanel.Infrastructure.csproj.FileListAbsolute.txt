@@ -21,9 +21,7 @@ C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\bi
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\bin\Debug\net8.0\ClanControlPanel.Infrastructure.runtimeconfig.json
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\bin\Debug\net8.0\ClanControlPanel.Infrastructure.dll
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\bin\Debug\net8.0\ClanControlPanel.Infrastructure.pdb
-C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\bin\Debug\net8.0\ClanControlPanel.Application.dll
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\bin\Debug\net8.0\ClanControlPanel.Core.dll
-C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\bin\Debug\net8.0\ClanControlPanel.Application.pdb
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\bin\Debug\net8.0\ClanControlPanel.Core.pdb
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\obj\Debug\net8.0\ClanControlPanel.Infrastructure.csproj.AssemblyReference.cache
 C:\Users\ordoo\RiderProjects\ClanControlPanel\ClanControlPanel.Infrastructure\obj\Debug\net8.0\ClanControlPanel.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig

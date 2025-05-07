@@ -1,78 +1,77 @@
 ﻿using ClanControlPanel.Core.DTO;
-using ClanControlPanel.Core.Interfaces.Repositories;
 using ClanControlPanel.Core.Interfaces.Services;
 using ClanControlPanel.Core.Models;
+using ClanControlPanel.Infrastructure.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ClanControlPanel.Infrastructure.Mappings;
 
 namespace ClanControlPanel.Application.Servises
 {
-    public class UserServise : IUserServices
+    public class UserServise(IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator, ClanControlPanelContext context) : IUserServices
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IPasswordHasher _passwordHasher;
-        private readonly ITokenGenerator _tokenGenerator;
-        public UserServise(IUserRepository userRepository, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator)
+        public async Task<List<User>> GetUsers()
         {
-            _userRepository = userRepository;
-            _passwordHasher = passwordHasher;
-            _tokenGenerator = tokenGenerator;
-
-        }
-
-        public async Task<ICollection<UserResponse>> GetAllUser()
-        {
-            var userList = await _userRepository.GetUsers();
-
+            var userList = await context.Users.Select(u => u.ToDomain()).ToListAsync();
             return userList;
         }
 
-        public async Task<string?> Login(string login, string password)
+        public async Task<string> Login(string login, string password)
         {
-            var user = await _userRepository.GetByLoginAsync(login);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Login == login);
             if (user == null)
             {
-                // Мб потом Exception
-                return null;
+                throw new Exception("Пользователь не найден"); 
             }
-            var resultVerify = _passwordHasher.Verify(password, user.PasswordHash);
+            var resultVerify = passwordHasher.Verify(password, user.PasswordHash);
 
             if (resultVerify)
             {
-                return _tokenGenerator.GenerateToken(user);
+                return tokenGenerator.GenerateToken(user.ToDomain());
             }
-            // Мб потом Exception
-            return null;
+            throw new Exception("Неверный логин или пароль"); 
         }
 
         public async Task<string?> Register(string login, string password, string name)
         {
-            if (await _userRepository.GetByLoginAsync(login) is not null)
+            if (await context.Users.FirstOrDefaultAsync(u => u.Login == login) is not null)
             {
-                return null;
+                throw new Exception("Логин занят");
             }
-            var passwordHash = _passwordHasher.GenerateHash(password);
+            var passwordHash = passwordHasher.GenerateHash(password);
 
             var user = new User(login, passwordHash, name);
 
-            await _userRepository.AddAsync(user);
+            await context.Users.AddAsync(user.ToEntity());
             return login;
         }
 
-        public async Task RemoveUserById(int id)
+        public async Task RemoveUserById(Guid id)
         {
-            await _userRepository.DeleteAsync(id);
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (user is null)
+            {
+                throw new Exception("Пользователь не найден");
+            }
 
+            try
+            {
+                context.Users.Remove(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public async Task UpdateUser(int id, string? name, string? login, string? password)
+        public async Task UpdateUser(Guid id, string? name, string? login, string? password)
         {
-            var user = await _userRepository.GetByIdAsync(id);
-
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user is null)
             {
                 throw new Exception("Пользователь не найден");
@@ -85,19 +84,27 @@ namespace ClanControlPanel.Application.Servises
 
             if (!string.IsNullOrEmpty(login))
             {
-                var result = await _userRepository.GetByLoginAsync(login);
-                if (result is not null)
+                if (await context.Users.FirstOrDefaultAsync(u => u.Login == login) is not null)
+                {
                     throw new Exception("Логин занят");
+                }
                 user.Login = login;
             }
 
             if (!string.IsNullOrEmpty(password))
             {
-                var NewPasswordHash = _passwordHasher.GenerateHash(password);
+                var NewPasswordHash = passwordHasher.GenerateHash(password);
                 user.PasswordHash = NewPasswordHash;
-
             }
-            await _userRepository.UpdateUser(user, id);
+
+            try
+            {
+                context.Users.Update(user);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

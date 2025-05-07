@@ -15,17 +15,5 @@ namespace ClanControlPanel.Core.DTO
         public string Password { get; set; } = string.Empty;
         [Required(ErrorMessage = "Укажите имя"), MinLength(2, ErrorMessage = "Минимальная длинна имени - 2 символа")]
         public string Name { get; set; } = string.Empty;
-
-        
-        public List<ValidationResult?> Validation(RegisterUserRequest registerUserRequest)
-        {
-            var context = new ValidationContext(registerUserRequest);
-            var result = new List<ValidationResult>();
-            if(!Validator.TryValidateObject(registerUserRequest, context, result, true))
-            {
-                return result;
-            }
-            return result;
-        }
     }
 }

@@ -4,229 +4,6 @@
     "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Api\\ClanControlPanel.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj",
-        "projectName": "ClanControlPanel.Application",
-        "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj",
-        "packagesPath": "C:\\Users\\ordoo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\ordoo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net8.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
-            "projectReferences": {
-              "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj": {
-                "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        }
-      },
-      "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
-          "dependencies": {
-            "BCrypt.Net-Next": {
-              "target": "Package",
-              "version": "[4.0.3, )"
-            },
-            "Microsoft.AspNetCore.Authentication.JwtBearer": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj",
-        "projectName": "ClanControlPanel.Core",
-        "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj",
-        "packagesPath": "C:\\Users\\ordoo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\ordoo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net8.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        }
-      },
-      "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj",
-        "projectName": "ClanControlPanel.Infrastructure",
-        "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\ordoo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\ordoo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net8.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
-            "projectReferences": {
-              "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj": {
-                "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj"
-              },
-              "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj": {
-                "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        }
-      },
-      "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
-          "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.Design": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.0, )"
-            },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[8.0.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
-        }
-      }
-    },
     "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Api\\ClanControlPanel.Api.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -251,15 +28,6 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj": {
-                "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj"
-              },
-              "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj": {
-                "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj"
-              },
-              "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\ordoo\\Desktop\\WebApiСontrolPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj"
-              },
               "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj": {
                 "projectPath": "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj"
               },
@@ -287,6 +55,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
@@ -341,6 +113,9 @@
             "projectReferences": {
               "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj": {
                 "projectPath": "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj"
+              },
+              "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Infrastructure\\ClanControlPanel.Infrastructure.csproj"
               }
             }
           }
@@ -473,9 +248,6 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj": {
-                "projectPath": "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Application\\ClanControlPanel.Application.csproj"
-              },
               "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj": {
                 "projectPath": "C:\\Users\\ordoo\\RiderProjects\\ClanControlPanel\\ClanControlPanel.Core\\ClanControlPanel.Core.csproj"
               }

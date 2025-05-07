@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ClanControlPanel.Infrastructure.Data;
-
-public partial class UserDb
+﻿
+namespace ClanControlPanel.Infrastructure.Data
 {
-    public int IdUser { get; set; }
-
-    public string? Login { get; set; }
-
-    public string? PasswordHash { get; set; }
-
-    public string? Name { get; set; }
+    public class UserDb
+    {
+        public Guid Id { get; set; }
+        public string Login { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        
+        public PlayerDb? Player { get; set; }
+    }
 }

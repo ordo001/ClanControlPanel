@@ -27,7 +27,7 @@ namespace ClanControlPanel.Api.Controllers
             return Ok(token);
         }
 
-        [HttpGet("validateToke")]
+        [HttpGet("validateToken")]
         [Authorize]
         public async Task<IActionResult> ValidateToken()
         {
