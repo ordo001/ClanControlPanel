@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "K1OVGzWH7QKOeqT2uo1lvcUxGuJkLexF08j7R8iy2bo=",
+  "Source": "ClanControlPanel.Api",
+  "BasePath": "_content/ClanControlPanel.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
