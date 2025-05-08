@@ -21,6 +21,18 @@ namespace ClanControlPanel.Application.Servises
             return userList;
         }
 
+        public async Task<User> GetUserById(Guid userId)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user is null)
+            {
+                throw new Exception("Пользователь не найден");
+            }
+
+            return user.ToDomain();
+        }
+
         public async Task<string> Login(string login, string password)
         {
             var user = await context.Users.FirstOrDefaultAsync(u => u.Login == login);
@@ -37,7 +49,7 @@ namespace ClanControlPanel.Application.Servises
             throw new Exception("Неверный логин или пароль"); 
         }
 
-        public async Task<string?> Register(string login, string password, string name)
+        public async Task<string?> Register(string login, string password, string name, string? role)
         {
             if (await context.Users.FirstOrDefaultAsync(u => u.Login == login) is not null)
             {
@@ -45,10 +57,23 @@ namespace ClanControlPanel.Application.Servises
             }
             var passwordHash = passwordHasher.GenerateHash(password);
 
-            var user = new User(login, passwordHash, name);
-
-            await context.Users.AddAsync(user.ToEntity());
-            return login;
+            var user = new User
+            {
+                Login = login,
+                PasswordHash = passwordHash,
+                Name = name,
+                Role = role ?? "User"
+            };
+            try
+            {
+                await context.Users.AddAsync(user.ToDb());
+                await context.SaveChangesAsync();
+                return login;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task RemoveUserById(Guid id)
@@ -62,6 +87,7 @@ namespace ClanControlPanel.Application.Servises
             try
             {
                 context.Users.Remove(user);
+                await context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -100,6 +126,7 @@ namespace ClanControlPanel.Application.Servises
             try
             {
                 context.Users.Update(user);
+                await context.SaveChangesAsync();
             }
             catch (Exception ex)
             {

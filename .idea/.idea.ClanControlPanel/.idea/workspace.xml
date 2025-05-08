@@ -9,17 +9,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ea7c72d-db7b-47d3-a0c2-b961f76535d5" name="Changes" comment="init">
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Application/Servises/Validator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Interfaces/Services/IValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanMoneyChangeReason.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanMoneyDb.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanWarAttendanceDb.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/EquipmentDb.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/GoldenDropAttendanceDb.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ItemDb.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/PlayerDb.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ScheduleDb.cs" afterDir="false" />
+    <list default="true" id="0ea7c72d-db7b-47d3-a0c2-b961f76535d5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Application/Servises/PlayerService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Application/Servises/SquadService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Interfaces/Services/IPlayerService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Interfaces/Services/ISquadService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Event.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/EventAttendence.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/EventType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Squad.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/EventAttendenceDb.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/EventDb.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/EventType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/SquadDb.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Mappings/EntityMappers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/dataSources/228b3355-f1ee-4644-b7a9-403b3b364b83.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/dataSources/228b3355-f1ee-4644-b7a9-403b3b364b83/storage_v2/_src_/database/postgres.edMnLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/dataSources/228b3355-f1ee-4644-b7a9-403b3b364b83/storage_v2/_src_/database/postgres.edMnLQ/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/dataSources/228b3355-f1ee-4644-b7a9-403b3b364b83/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/dataSources/228b3355-f1ee-4644-b7a9-403b3b364b83/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/dataSources/f9fc2a63-3c5e-4511-9703-8a88d0dc2f77.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/dataSources/f9fc2a63-3c5e-4511-9703-8a88d0dc2f77.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/dataSources/f9fc2a63-3c5e-4511-9703-8a88d0dc2f77/storage_v2/_src_/database/ClanControlPanel.PfBGqw/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/dataSources/f9fc2a63-3c5e-4511-9703-8a88d0dc2f77/storage_v2/_src_/database/ClanControlPanel.PfBGqw/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ClanControlPanel/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/ClanControlPanel.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/ClanControlPanel.Api.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/Controllers/AuthController.cs" afterDir="false" />
@@ -39,10 +49,14 @@
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/bin/Debug/net8.0/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/bin/Debug/net8.0/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/ClanControlPanel.Api.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/ClanControlPanel.Api.csproj.nuget.dgspec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/ClanControlPanel.Api.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/ClanControlPanel.Api.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/ClanControlPanel.Api.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/ClanControlPanel.Api.csproj.nuget.g.targets" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/Debug/net8.0/ClanControlPanel.Api.sourcelink.json" afterDir="false" />
@@ -54,35 +68,34 @@
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Api/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Api/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/ClanControlPanel.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/ClanControlPanel.Application.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/Servises/UserServise.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/Servises/UserServise.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Application.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Application.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Application.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Application.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Core.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Core.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/ClanControlPanel.Application.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/ClanControlPanel.Application.csproj.nuget.dgspec.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/ClanControlPanel.Application.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/ClanControlPanel.Application.csproj.nuget.g.props" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/ClanControlPanel.Application.csproj.nuget.g.targets" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/ClanControlPanel.Application.csproj.nuget.g.targets" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Infrastructure.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/bin/Debug/net8.0/ClanControlPanel.Infrastructure.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ClanControlPanel.Application.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ref/ClanControlPanel.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/ref/ClanControlPanel.Application.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/refint/ClanControlPanel.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/Debug/net8.0/refint/ClanControlPanel.Application.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Application/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Application/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/DTO/RegisterUserRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/DTO/RegisterUserRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/DTO/UpdateUserRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/DTO/UpdateUserRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Interfaces/Repositories/IUserRepository.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Interfaces/Services/IUserServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Interfaces/Services/IUserServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Models/ClanMoney.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/ClanMoney.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Models/ClanWarAttendance.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Equipment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Equipment.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Models/GoldenDropAttendance.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Items.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Item.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Schedule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/Schedule.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/Models/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/Models/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/bin/Debug/net8.0/ClanControlPanel.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/bin/Debug/net8.0/ClanControlPanel.Core.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/bin/Debug/net8.0/ClanControlPanel.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/bin/Debug/net8.0/ClanControlPanel.Core.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/obj/Debug/net8.0/ClanControlPanel.Core.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/obj/Debug/net8.0/ClanControlPanel.Core.AssemblyInfo.cs" afterDir="false" />
@@ -93,35 +106,35 @@
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/obj/Debug/net8.0/ClanControlPanel.Core.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/obj/Debug/net8.0/ClanControlPanel.Core.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/obj/Debug/net8.0/ref/ClanControlPanel.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/obj/Debug/net8.0/ref/ClanControlPanel.Core.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/obj/Debug/net8.0/refint/ClanControlPanel.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/obj/Debug/net8.0/refint/ClanControlPanel.Core.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Core/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Core/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/ClanControlPanel.Infrastructure.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/ClanControlPanel.Infrastructure.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ControlPanelContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanControlPanelContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanControlPanelContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanControlPanelContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanMoneyChangeReason.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanMoneyDb.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanMoneyDb.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ClanWarAttendanceDb.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/EquipmentDb.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/EquipmentDb.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/GoldenDropAttendanceDb.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/PlayerDb.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/PlayerDb.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ScheduleDb.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/ScheduleDb.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/UserDb.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Data/UserDb.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Mappings/UserMappings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Mappings/UserMappings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Repositories/UserRepository.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Application.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Application.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Mappings/UserMappings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Migrations/20250507212222_Initial.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Migrations/20250507212222_Initial.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/Migrations/ClanControlPanelContextModelSnapshot.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Core.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Core.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Core.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Core.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Infrastructure.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Infrastructure.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Infrastructure.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Infrastructure.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Infrastructure.runtimeconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/bin/Debug/net8.0/ClanControlPanel.Infrastructure.runtimeconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/ClanControlPanel.Infrastructure.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/ClanControlPanel.Infrastructure.csproj.nuget.dgspec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ClanControlPanel.Infrastructure.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ref/ClanControlPanel.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/ref/ClanControlPanel.Infrastructure.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/refint/ClanControlPanel.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/Debug/net8.0/refint/ClanControlPanel.Infrastructure.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/project.assets.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/ClanControlPanel.Infrastructure/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -135,18 +148,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ordo001"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ordo001&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ordo001/ClanControlPanel",
-    "accountId": "5fa820a7-54ee-4e50-a576-1c73c752c8a5"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ordo001/ClanControlPanel&quot;,
+    &quot;accountId&quot;: &quot;5fa820a7-54ee-4e50-a576-1c73c752c8a5&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/ClanControlPanel.Api/Controllers/AuthController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ClanControlPanel.Api/Controllers/UserController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -158,9 +171,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="Toolset" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2wmF3TyoK9ecSbv48ysJAXMMdMo" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -171,6 +184,7 @@
   "keyToString": {
     ".NET Launch Settings Profile.ClanControlPanel: IIS Express.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "com.codeium.enabled": "true",
     "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
@@ -241,7 +255,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1746638643397</updated>
-      <workItem from="1746638644726" duration="11118000" />
+      <workItem from="1746638644726" duration="11486000" />
+      <workItem from="1746706769690" duration="9088000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -259,7 +274,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746647825405</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Update backend #1&#10;- Add UserServise&#10;- Add migration">
+      <option name="closed" value="true" />
+      <created>1746653134040</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746653134040</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,6 +304,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="init" />
-    <option name="LAST_COMMIT_MESSAGE" value="init" />
+    <MESSAGE value="Update backend #1&#10;- Add UserServise&#10;- Add migration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update backend #1&#10;- Add UserServise&#10;- Add migration" />
   </component>
 </project>

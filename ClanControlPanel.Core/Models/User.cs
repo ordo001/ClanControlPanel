@@ -9,14 +9,15 @@ namespace ClanControlPanel.Core.Models
 {
     public class User
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Login { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         
+        public string Role { get; set; } = string.Empty;
         public Player? Player { get; set; }
 
-        public User(string login, string password, string name) {
+        /*public User(string login, string password, string name) {
             Id = Guid.NewGuid();
             Login = login;
             PasswordHash = password;
@@ -29,6 +30,6 @@ namespace ClanControlPanel.Core.Models
             Login = login;
             PasswordHash = password;
             Name = name;
-        }
+        }*/
     }
 }

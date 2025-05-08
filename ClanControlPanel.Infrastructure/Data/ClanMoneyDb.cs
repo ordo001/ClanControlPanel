@@ -1,3 +1,5 @@
+using ClanControlPanel.Core.Models;
+
 namespace ClanControlPanel.Infrastructure.Data;
 
 /// <summary>
@@ -24,7 +26,7 @@ public class ClanMoneyDb
     /// <summary>
     /// Фиксированная причина (enum)
     /// </summary>
-    public ClanMoneyChangeReason ReasonDb { get; set; } 
+    public ClanMoneyChangeReason Reason { get; set; } 
     /// <summary>
     /// Произвольная причина (только если Reason == Other)
     /// </summary>

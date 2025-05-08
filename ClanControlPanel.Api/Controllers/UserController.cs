@@ -7,7 +7,7 @@ namespace ClanControlPanel.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    /*[Authorize]*/
     public class UserController(IUserServices userServise, IValidatorService validator, IConfiguration config) : ControllerBase
     {
         [HttpGet]
@@ -25,12 +25,12 @@ namespace ClanControlPanel.Api.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveUser(Guid id)
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> RemoveUser(Guid userId)
         {
             try
             {
-                await userServise.RemoveUserById(id);
+                await userServise.RemoveUserById(userId);
                 return Ok();
             }
             catch (Exception ex)
@@ -53,13 +53,9 @@ namespace ClanControlPanel.Api.Controllers
                 var result = await userServise.Register(
                     registerUserRequest.Login,
                     registerUserRequest.Password,
-                    registerUserRequest.Name);
-
-                if (result is null)
-                {
-                    return BadRequest("Логин занят");
-                }
-
+                    registerUserRequest.Name,
+                    registerUserRequest.Role!);
+                
                 return Ok(result);
             }
             catch (Exception ex)

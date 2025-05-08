@@ -12,8 +12,9 @@ namespace ClanControlPanel.Core.Interfaces.Services
     public interface IUserServices
     {
         Task<string> Login(string login, string password);
-        Task<string?> Register(string login, string password, string name);
+        Task<string?> Register(string login, string password, string name, string? role);
         Task<List<User>> GetUsers();
+        Task<User> GetUserById(Guid userId);
         Task RemoveUserById(Guid id);
         Task UpdateUser(Guid id, string? name, string? login, string? password);
     }

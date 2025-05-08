@@ -5,7 +5,7 @@ public class EquipmentDb
     public Guid Id { get; set; }
 
     public Guid PlayerId { get; set; }
-    public PlayerDb PlayerDb { get; set; } = null!;
-    public Guid ItemDbId { get; set; }
-    public ItemDb ItemDb { get; set; } = null!;
+    public PlayerDb Player { get; set; } = null!;
+    public Guid ItemId { get; set; }
+    public ItemDb Item { get; set; } = null!;
 }

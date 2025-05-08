@@ -3,7 +3,7 @@
   <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.53">
     <root id="1">
       <DateStyle>dmy</DateStyle>
-      <IntrospectionStateNumber>1447</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1524</IntrospectionStateNumber>
       <ServerVersion>17.2</ServerVersion>
       <StartupTime>1746438895</StartupTime>
       <TimeZones>true ACDT
@@ -800,7 +800,7 @@ false Zulu
 14704||10|C|G
 14704||-9223372036854775808|U|G
 14704||10|U|G</Grants>
-      <IntrospectionStateNumber>1447</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1524</IntrospectionStateNumber>
       <ObjectId>33110</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4247,11 +4247,621 @@ false Zulu
     <schema id="270" parent="2" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>1447</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2025-05-07.21:22:09</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>1524</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2025-05-08.14:18:49</LastIntrospectionLocalTimestamp>
       <ObjectId>2200</ObjectId>
       <StateNumber>532</StateNumber>
       <OwnerName>pg_database_owner</OwnerName>
     </schema>
+    <table id="271" parent="270" name="ClanMoney">
+      <ObjectId>33674</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="272" parent="270" name="Equipments">
+      <ObjectId>33738</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="273" parent="270" name="Event">
+      <ObjectId>33709</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="274" parent="270" name="EventAttendences">
+      <ObjectId>33753</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="275" parent="270" name="EventTypes">
+      <ObjectId>33681</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="276" parent="270" name="Items">
+      <ObjectId>33688</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="277" parent="270" name="Players">
+      <ObjectId>33721</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="278" parent="270" name="Schedule">
+      <ObjectId>33770</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="279" parent="270" name="Squads">
+      <ObjectId>33695</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="280" parent="270" name="Users">
+      <ObjectId>33702</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <table id="281" parent="270" name="__EFMigrationsHistory">
+      <ObjectId>33669</ObjectId>
+      <StateNumber>1520</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>postgres</OwnerName>
+    </table>
+    <column id="282" parent="271" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="283" parent="271" name="ActionDate">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>timestamp with time zone|0s</StoredType>
+      <TypeId>1184</TypeId>
+    </column>
+    <column id="284" parent="271" name="TotalAmountAfterAction">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>numeric|0s</StoredType>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="285" parent="271" name="ChangeAmount">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>numeric|0s</StoredType>
+      <TypeId>1700</TypeId>
+    </column>
+    <column id="286" parent="271" name="Reason">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="287" parent="271" name="CustomReason">
+      <Position>6</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="288" parent="271" name="PK_ClanMoney">
+      <ColNames>Id</ColNames>
+      <ObjectId>33679</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="289" parent="271" name="PK_ClanMoney">
+      <ObjectId>33680</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33679</UnderlyingIndexId>
+    </key>
+    <column id="290" parent="272" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="291" parent="272" name="PlayerId">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="292" parent="272" name="ItemId">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="293" parent="272" name="FK_Equipments_Players_PlayerId">
+      <ColNames>PlayerId</ColNames>
+      <ObjectId>33748</ObjectId>
+      <OnDelete>cascade</OnDelete>
+      <StateNumber>1521</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>33721</RefTableId>
+    </foreign-key>
+    <foreign-key id="294" parent="272" name="FK_Equipments_Items_ItemId">
+      <ColNames>ItemId</ColNames>
+      <ObjectId>33743</ObjectId>
+      <OnDelete>cascade</OnDelete>
+      <StateNumber>1521</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>33688</RefTableId>
+    </foreign-key>
+    <index id="295" parent="272" name="PK_Equipments">
+      <ColNames>Id</ColNames>
+      <ObjectId>33741</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="296" parent="272" name="IX_Equipments_PlayerId">
+      <ColNames>PlayerId</ColNames>
+      <ObjectId>33781</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="297" parent="272" name="IX_Equipments_ItemId">
+      <ColNames>ItemId</ColNames>
+      <ObjectId>33780</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="298" parent="272" name="PK_Equipments">
+      <ObjectId>33742</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33741</UnderlyingIndexId>
+    </key>
+    <column id="299" parent="273" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="300" parent="273" name="Name">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="301" parent="273" name="Date">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>timestamp with time zone|0s</StoredType>
+      <TypeId>1184</TypeId>
+    </column>
+    <column id="302" parent="273" name="EventTypeId">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="303" parent="273" name="Status">
+      <Position>5</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <foreign-key id="304" parent="273" name="FK_Event_EventTypes_EventTypeId">
+      <ColNames>EventTypeId</ColNames>
+      <ObjectId>33716</ObjectId>
+      <OnDelete>cascade</OnDelete>
+      <StateNumber>1521</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>33681</RefTableId>
+    </foreign-key>
+    <index id="305" parent="273" name="PK_Event">
+      <ColNames>Id</ColNames>
+      <ObjectId>33714</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="306" parent="273" name="IX_Event_EventTypeId">
+      <ColNames>EventTypeId</ColNames>
+      <ObjectId>33782</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="307" parent="273" name="PK_Event">
+      <ObjectId>33715</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33714</UnderlyingIndexId>
+    </key>
+    <column id="308" parent="274" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="309" parent="274" name="EventId">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="310" parent="274" name="PlayerId">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="311" parent="274" name="WasPresent">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>boolean|0s</StoredType>
+      <TypeId>16</TypeId>
+    </column>
+    <column id="312" parent="274" name="IsExcused">
+      <Position>5</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>boolean|0s</StoredType>
+      <TypeId>16</TypeId>
+    </column>
+    <column id="313" parent="274" name="AbsenceReason">
+      <Position>6</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <foreign-key id="314" parent="274" name="FK_EventAttendences_Event_EventId">
+      <ColNames>EventId</ColNames>
+      <ObjectId>33760</ObjectId>
+      <OnDelete>cascade</OnDelete>
+      <StateNumber>1521</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>33709</RefTableId>
+    </foreign-key>
+    <foreign-key id="315" parent="274" name="FK_EventAttendences_Players_PlayerId">
+      <ColNames>PlayerId</ColNames>
+      <ObjectId>33765</ObjectId>
+      <OnDelete>cascade</OnDelete>
+      <StateNumber>1521</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>33721</RefTableId>
+    </foreign-key>
+    <index id="316" parent="274" name="PK_EventAttendences">
+      <ColNames>Id</ColNames>
+      <ObjectId>33758</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="317" parent="274" name="IX_EventAttendences_EventId">
+      <ColNames>EventId</ColNames>
+      <ObjectId>33783</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="318" parent="274" name="IX_EventAttendences_PlayerId">
+      <ColNames>PlayerId</ColNames>
+      <ObjectId>33784</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="319" parent="274" name="PK_EventAttendences">
+      <ObjectId>33759</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33758</UnderlyingIndexId>
+    </key>
+    <column id="320" parent="275" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="321" parent="275" name="NameEventType">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="322" parent="275" name="PK_EventTypes">
+      <ColNames>Id</ColNames>
+      <ObjectId>33686</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="323" parent="275" name="PK_EventTypes">
+      <ObjectId>33687</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33686</UnderlyingIndexId>
+    </key>
+    <column id="324" parent="276" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="325" parent="276" name="Name">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="326" parent="276" name="Description">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="327" parent="276" name="PK_Items">
+      <ColNames>Id</ColNames>
+      <ObjectId>33693</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="328" parent="276" name="PK_Items">
+      <ObjectId>33694</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33693</UnderlyingIndexId>
+    </key>
+    <column id="329" parent="277" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="330" parent="277" name="Name">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="331" parent="277" name="UserId">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="332" parent="277" name="SquadId">
+      <Position>4</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <foreign-key id="333" parent="277" name="FK_Players_Users_UserId">
+      <ColNames>UserId</ColNames>
+      <ObjectId>33733</ObjectId>
+      <OnDelete>cascade</OnDelete>
+      <StateNumber>1521</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>33702</RefTableId>
+    </foreign-key>
+    <foreign-key id="334" parent="277" name="FK_Players_Squads_SquadId">
+      <ColNames>SquadId</ColNames>
+      <ObjectId>33728</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>33695</RefTableId>
+    </foreign-key>
+    <index id="335" parent="277" name="PK_Players">
+      <ColNames>Id</ColNames>
+      <ObjectId>33726</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="336" parent="277" name="IX_Players_UserId">
+      <ColNames>UserId</ColNames>
+      <ObjectId>33786</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="337" parent="277" name="IX_Players_SquadId">
+      <ColNames>SquadId</ColNames>
+      <ObjectId>33785</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="338" parent="277" name="PK_Players">
+      <ObjectId>33727</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33726</UnderlyingIndexId>
+    </key>
+    <column id="339" parent="278" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="340" parent="278" name="PlayerId">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="341" parent="278" name="DayOfWeek">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>integer|0s</StoredType>
+      <TypeId>23</TypeId>
+    </column>
+    <foreign-key id="342" parent="278" name="FK_Schedule_Players_PlayerId">
+      <ColNames>PlayerId</ColNames>
+      <ObjectId>33775</ObjectId>
+      <OnDelete>cascade</OnDelete>
+      <StateNumber>1521</StateNumber>
+      <RefKeyColPositions>1</RefKeyColPositions>
+      <RefTableId>33721</RefTableId>
+    </foreign-key>
+    <index id="343" parent="278" name="PK_Schedule">
+      <ColNames>Id</ColNames>
+      <ObjectId>33773</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <index id="344" parent="278" name="IX_Schedule_PlayerId">
+      <ColNames>PlayerId</ColNames>
+      <ObjectId>33787</ObjectId>
+      <StateNumber>1521</StateNumber>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="345" parent="278" name="PK_Schedule">
+      <ObjectId>33774</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33773</UnderlyingIndexId>
+    </key>
+    <column id="346" parent="279" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="347" parent="279" name="NameSquad">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="348" parent="279" name="PK_Squads">
+      <ColNames>Id</ColNames>
+      <ObjectId>33700</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="349" parent="279" name="PK_Squads">
+      <ObjectId>33701</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33700</UnderlyingIndexId>
+    </key>
+    <column id="350" parent="280" name="Id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>uuid|0s</StoredType>
+      <TypeId>2950</TypeId>
+    </column>
+    <column id="351" parent="280" name="Login">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="352" parent="280" name="PasswordHash">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="353" parent="280" name="Name">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>1521</StateNumber>
+      <StoredType>text|0s</StoredType>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="354" parent="280" name="PK_Users">
+      <ColNames>Id</ColNames>
+      <ObjectId>33707</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="355" parent="280" name="PK_Users">
+      <ObjectId>33708</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1521</StateNumber>
+      <UnderlyingIndexId>33707</UnderlyingIndexId>
+    </key>
+    <column id="356" parent="281" name="MigrationId">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>1520</StateNumber>
+      <StoredType>varchar(150)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="357" parent="281" name="ProductVersion">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>1520</StateNumber>
+      <StoredType>varchar(32)|0s</StoredType>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="358" parent="281" name="PK___EFMigrationsHistory">
+      <ColNames>MigrationId</ColNames>
+      <ObjectId>33672</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1520</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationNames>default</CollationNames>
+      <CollationIds>100</CollationIds>
+      <CollationParentNames>pg_catalog</CollationParentNames>
+    </index>
+    <key id="359" parent="281" name="PK___EFMigrationsHistory">
+      <ObjectId>33673</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>1520</StateNumber>
+      <UnderlyingIndexId>33672</UnderlyingIndexId>
+    </key>
   </database-model>
 </dataSource>

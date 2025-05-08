@@ -7,14 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Desktop\WebApiСontrolPanel\ClanControlPanel.Application\ClanControlPanel.Application.csproj" />
+      <!--<ProjectReference Include="..\..\..\Desktop\WebApiСontrolPanel\ClanControlPanel.Application\ClanControlPanel.Application.csproj" />
       <ProjectReference Include="..\..\..\Desktop\WebApiСontrolPanel\ClanControlPanel.Core\ClanControlPanel.Core.csproj" />
-      <ProjectReference Include="..\..\..\Desktop\WebApiСontrolPanel\ClanControlPanel.Infrastructure\ClanControlPanel.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\Desktop\WebApiСontrolPanel\ClanControlPanel.Infrastructure\ClanControlPanel.Infrastructure.csproj" />-->
       <ProjectReference Include="..\ClanControlPanel.Application\ClanControlPanel.Application.csproj" />
       <ProjectReference Include="..\ClanControlPanel.Core\ClanControlPanel.Core.csproj" />
       <ProjectReference Include="..\ClanControlPanel.Infrastructure\ClanControlPanel.Infrastructure.csproj" />

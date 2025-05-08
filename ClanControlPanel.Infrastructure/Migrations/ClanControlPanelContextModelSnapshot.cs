@@ -37,7 +37,7 @@ namespace ClanControlPanel.Infrastructure.Migrations
                     b.Property<string>("CustomReason")
                         .HasColumnType("text");
 
-                    b.Property<int>("ReasonDb")
+                    b.Property<int>("Reason")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("TotalAmountAfterAction")
@@ -48,7 +48,28 @@ namespace ClanControlPanel.Infrastructure.Migrations
                     b.ToTable("ClanMoney");
                 });
 
-            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.ClanWarAttendanceDb", b =>
+            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.EquipmentDb", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PlayerId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("Equipments");
+                });
+
+            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.EventAttendenceDb", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,11 +78,11 @@ namespace ClanControlPanel.Infrastructure.Migrations
                     b.Property<string>("AbsenceReason")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("PlayerDbId")
+                    b.Property<Guid>("EventId")
                         .HasColumnType("uuid");
+
+                    b.Property<bool?>("IsExcused")
+                        .HasColumnType("boolean");
 
                     b.Property<Guid>("PlayerId")
                         .HasColumnType("uuid");
@@ -71,33 +92,14 @@ namespace ClanControlPanel.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerDbId");
-
-                    b.ToTable("ClanWarAttendance");
-                });
-
-            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.EquipmentDb", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ItemDbId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemDbId");
+                    b.HasIndex("EventId");
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("Equipments");
+                    b.ToTable("EventAttendences");
                 });
 
-            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.GoldenDropAttendanceDb", b =>
+            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.EventDb", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,17 +108,36 @@ namespace ClanControlPanel.Infrastructure.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("PlayerDbId")
+                    b.Property<Guid>("EventTypeId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("PlayerId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerDbId");
+                    b.HasIndex("EventTypeId");
 
-                    b.ToTable("GoldenDropAttendance");
+                    b.ToTable("Event");
+                });
+
+            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.EventTypeDb", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("NameEventType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EventTypes");
                 });
 
             modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.ItemDb", b =>
@@ -148,10 +169,15 @@ namespace ClanControlPanel.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("SquadId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SquadId");
 
                     b.HasIndex("UserId")
                         .IsUnique();
@@ -168,17 +194,29 @@ namespace ClanControlPanel.Infrastructure.Migrations
                     b.Property<int>("DayOfWeek")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("PlayerDbId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("PlayerId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PlayerDbId");
+                    b.HasIndex("PlayerId");
 
                     b.ToTable("Schedule");
+                });
+
+            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.SquadDb", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("NameSquad")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Squads");
                 });
 
             modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.UserDb", b =>
@@ -199,83 +237,109 @@ namespace ClanControlPanel.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.ClanWarAttendanceDb", b =>
-                {
-                    b.HasOne("ClanControlPanel.Infrastructure.Data.PlayerDb", "PlayerDb")
-                        .WithMany("ClanWarAttendances")
-                        .HasForeignKey("PlayerDbId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PlayerDb");
-                });
-
             modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.EquipmentDb", b =>
                 {
-                    b.HasOne("ClanControlPanel.Infrastructure.Data.ItemDb", "ItemDb")
+                    b.HasOne("ClanControlPanel.Infrastructure.Data.ItemDb", "Item")
                         .WithMany()
-                        .HasForeignKey("ItemDbId")
+                        .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ClanControlPanel.Infrastructure.Data.PlayerDb", "PlayerDb")
+                    b.HasOne("ClanControlPanel.Infrastructure.Data.PlayerDb", "Player")
                         .WithMany("Equipments")
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ItemDb");
+                    b.Navigation("Item");
 
-                    b.Navigation("PlayerDb");
+                    b.Navigation("Player");
                 });
 
-            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.GoldenDropAttendanceDb", b =>
+            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.EventAttendenceDb", b =>
                 {
-                    b.HasOne("ClanControlPanel.Infrastructure.Data.PlayerDb", "PlayerDb")
-                        .WithMany("GoldenDropAttendances")
-                        .HasForeignKey("PlayerDbId")
+                    b.HasOne("ClanControlPanel.Infrastructure.Data.EventDb", "Event")
+                        .WithMany("Attendences")
+                        .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PlayerDb");
+                    b.HasOne("ClanControlPanel.Infrastructure.Data.PlayerDb", "Player")
+                        .WithMany("Attendences")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.EventDb", b =>
+                {
+                    b.HasOne("ClanControlPanel.Infrastructure.Data.EventTypeDb", "EventType")
+                        .WithMany()
+                        .HasForeignKey("EventTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EventType");
                 });
 
             modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.PlayerDb", b =>
                 {
-                    b.HasOne("ClanControlPanel.Infrastructure.Data.UserDb", "UserDb")
+                    b.HasOne("ClanControlPanel.Infrastructure.Data.SquadDb", "Squad")
+                        .WithMany("Players")
+                        .HasForeignKey("SquadId");
+
+                    b.HasOne("ClanControlPanel.Infrastructure.Data.UserDb", "User")
                         .WithOne("Player")
                         .HasForeignKey("ClanControlPanel.Infrastructure.Data.PlayerDb", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("UserDb");
+                    b.Navigation("Squad");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.ScheduleDb", b =>
                 {
-                    b.HasOne("ClanControlPanel.Infrastructure.Data.PlayerDb", "PlayerDb")
+                    b.HasOne("ClanControlPanel.Infrastructure.Data.PlayerDb", "Player")
                         .WithMany("Schedules")
-                        .HasForeignKey("PlayerDbId")
+                        .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PlayerDb");
+                    b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.EventDb", b =>
+                {
+                    b.Navigation("Attendences");
                 });
 
             modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.PlayerDb", b =>
                 {
-                    b.Navigation("ClanWarAttendances");
+                    b.Navigation("Attendences");
 
                     b.Navigation("Equipments");
 
-                    b.Navigation("GoldenDropAttendances");
-
                     b.Navigation("Schedules");
+                });
+
+            modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.SquadDb", b =>
+                {
+                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("ClanControlPanel.Infrastructure.Data.UserDb", b =>
