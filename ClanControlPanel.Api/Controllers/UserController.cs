@@ -1,5 +1,7 @@
-﻿using ClanControlPanel.Core.DTO;
+﻿using ClanControlPanel.Application.Exceptions;
+using ClanControlPanel.Core.DTO;
 using ClanControlPanel.Core.Interfaces.Services;
+using ClanControlPanel.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +35,10 @@ namespace ClanControlPanel.Api.Controllers
                 await userServise.RemoveUserById(userId);
                 return Ok();
             }
+            catch (EntityNotFoundException<User> ex)
+            {
+                return NotFound(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -58,6 +64,10 @@ namespace ClanControlPanel.Api.Controllers
                 
                 return Ok(result);
             }
+            catch (EntityIsExists<User> ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message); 
@@ -71,6 +81,14 @@ namespace ClanControlPanel.Api.Controllers
             {
                 await userServise.UpdateUser(updateUserRequest.Id, updateUserRequest.Name, updateUserRequest.Login, updateUserRequest.Password);
                 return Ok();
+            }
+            catch (EntityNotFoundException<User> ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (EntityIsExists<User> ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch(Exception ex)
             {

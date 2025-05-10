@@ -13,5 +13,5 @@ public class Player
     
     public List<Schedule> Schedules { get; set; } = new();
     public List<Equipment> Equipments { get; set; } = new();
-    public List<EventAttendence> Attendences { get; set; } = new();
+    public List<EventAttendance> Attendences { get; set; } = new();
 }

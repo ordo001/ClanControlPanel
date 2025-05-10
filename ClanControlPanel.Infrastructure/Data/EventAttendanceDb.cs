@@ -1,8 +1,8 @@
 namespace ClanControlPanel.Infrastructure.Data;
 
-public class EventAttendenceDb
+public class EventAttendanceDb
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid EventId { get; set; }
     public EventDb Event { get; set; }
     public Guid PlayerId { get; set; }

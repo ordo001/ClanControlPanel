@@ -1,3 +1,4 @@
+using ClanControlPanel.Application.Exceptions;
 using ClanControlPanel.Core.Interfaces.Services;
 using ClanControlPanel.Core.Models;
 using ClanControlPanel.Infrastructure.Data;
@@ -13,11 +14,11 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         try
         {
             var players = await context.Players.ToListAsync();
-            return players.Select(p => p.ToDomain()).ToList();
+            return players;
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            throw;
         }
     }
 
@@ -26,12 +27,12 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         if (user is null)
         {
-            throw new Exception("Пользователь не найден");
+            throw new EntityNotFoundException<User>(userId);
         }
 
         try
         {
-            var player = new PlayerDb
+            var player = new Player
             {
                 Name = name,
                 UserId = userId
@@ -41,7 +42,7 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            throw;
         }
     }
 
@@ -52,7 +53,19 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         {
             throw new Exception("Игрок не найден");
         }
-        return player.ToDomain(); 
+
+        return player;
+    }
+
+    public async Task<Player> GetPlayerByName(string name)
+    {
+        var player = await context.Players.FirstOrDefaultAsync(p => p.Name == name);
+        if (player is null)
+        {
+            throw new EntityNotFoundException<Player>(name);
+        }
+
+        return player;
     }
 
     public async Task RemovePlayerById(Guid id)
@@ -60,7 +73,7 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         var player = await context.Players.FirstOrDefaultAsync(p => p.Id == id);
         if (player is null)
         {
-            throw new Exception("Игрок не найден");
+            throw new EntityNotFoundException<Player>(id);
         }
 
         try
@@ -70,7 +83,7 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            throw;
         }
     }
 
@@ -79,12 +92,12 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         var player = await context.Players.FirstOrDefaultAsync(p => p.Id == playerId);
         if (player is null)
         {
-            throw new Exception("Игрок не найден");
+            throw new EntityNotFoundException<Player>(playerId);
         }
         var squad = await context.Squads.FirstOrDefaultAsync(p => p.Id == squadId);
         if (squad is null)
         {
-            throw new Exception("Отряд не найден");
+            throw new EntityNotFoundException<Squad>(squadId);
         }
 
         try
@@ -95,7 +108,7 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            throw;
         }
         
     }
@@ -105,12 +118,12 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         var player = await context.Players.FirstOrDefaultAsync(p => p.Id == playerId);
         if (player is null)
         {
-            throw new Exception("Игрок не найден");
+            throw new EntityNotFoundException<Player>(playerId);
         }
 
         if (player.SquadId is null)
         {
-            throw new Exception("Игрок не состоит в отряде");
+            throw new PlayerIsNotInSquad<Player>(playerId);
         }
 
         try
@@ -121,7 +134,7 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         }
         catch (Exception ex)
         {
-            throw new Exception(ex.Message);
+            throw;
         }
     }
 }

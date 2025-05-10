@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClanControlPanel.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using ClanControlPanel.Infrastructure.Mappings;
 
@@ -17,7 +18,7 @@ namespace ClanControlPanel.Application.Servises
     {
         public async Task<List<User>> GetUsers()
         {
-            var userList = await context.Users.Select(u => u.ToDomain()).ToListAsync();
+            var userList = await context.Users.ToListAsync();
             return userList;
         }
 
@@ -27,10 +28,10 @@ namespace ClanControlPanel.Application.Servises
 
             if (user is null)
             {
-                throw new Exception("Пользователь не найден");
+                throw new EntityNotFoundException<User>(userId);
             }
 
-            return user.ToDomain();
+            return user;
         }
 
         public async Task<string> Login(string login, string password)
@@ -38,13 +39,13 @@ namespace ClanControlPanel.Application.Servises
             var user = await context.Users.FirstOrDefaultAsync(u => u.Login == login);
             if (user == null)
             {
-                throw new Exception("Пользователь не найден"); 
+                throw new EntityNotFoundException<User>(login);
             }
             var resultVerify = passwordHasher.Verify(password, user.PasswordHash);
 
             if (resultVerify)
             {
-                return tokenGenerator.GenerateToken(user.ToDomain());
+                return tokenGenerator.GenerateToken(user);
             }
             throw new Exception("Неверный логин или пароль"); 
         }
@@ -53,7 +54,7 @@ namespace ClanControlPanel.Application.Servises
         {
             if (await context.Users.FirstOrDefaultAsync(u => u.Login == login) is not null)
             {
-                throw new Exception("Логин занят");
+                throw new EntityIsExists<User>(login);
             }
             var passwordHash = passwordHasher.GenerateHash(password);
 
@@ -66,13 +67,13 @@ namespace ClanControlPanel.Application.Servises
             };
             try
             {
-                await context.Users.AddAsync(user.ToDb());
+                await context.Users.AddAsync(user);
                 await context.SaveChangesAsync();
                 return login;
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -81,7 +82,7 @@ namespace ClanControlPanel.Application.Servises
             var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user is null)
             {
-                throw new Exception("Пользователь не найден");
+                throw new EntityNotFoundException<User>(id);
             }
 
             try
@@ -91,7 +92,7 @@ namespace ClanControlPanel.Application.Servises
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw;
             }
         }
 
@@ -100,7 +101,7 @@ namespace ClanControlPanel.Application.Servises
             var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user is null)
             {
-                throw new Exception("Пользователь не найден");
+                throw new EntityNotFoundException<User>(id);
             }
 
             if (!string.IsNullOrEmpty(name))
@@ -112,7 +113,7 @@ namespace ClanControlPanel.Application.Servises
             {
                 if (await context.Users.FirstOrDefaultAsync(u => u.Login == login) is not null)
                 {
-                    throw new Exception("Логин занят");
+                    throw new EntityIsExists<User>(login);
                 }
                 user.Login = login;
             }
@@ -130,7 +131,7 @@ namespace ClanControlPanel.Application.Servises
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw;
             }
         }
     }

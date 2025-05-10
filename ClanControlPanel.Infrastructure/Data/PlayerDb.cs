@@ -11,5 +11,5 @@ public class PlayerDb
     
     public List<ScheduleDb> Schedules { get; set; } = new();
     public List<EquipmentDb> Equipments { get; set; } = new();
-    public List<EventAttendenceDb> Attendences { get; set; } = new();
+    public List<EventAttendanceDb> Attendences { get; set; } = new();
 }

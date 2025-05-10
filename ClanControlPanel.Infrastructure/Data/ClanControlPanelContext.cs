@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ClanControlPanel.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClanControlPanel.Infrastructure.Data;
@@ -15,26 +16,26 @@ public partial class ClanControlPanelContext : DbContext
     {
     }
 
-    public virtual DbSet<UserDb> Users { get; set; }
-    public virtual DbSet<ScheduleDb> Schedule { get; set; }
-    public virtual DbSet<PlayerDb> Players { get; set; }
-    public virtual DbSet<ItemDb> Items { get; set; }
-    public virtual DbSet<EventAttendenceDb> EventAttendences { get; set; }
-    public virtual DbSet<EventDb> Event { get; set; }
-    public virtual DbSet<EventTypeDb> EventTypes { get; set; }
-    public virtual DbSet<EquipmentDb> Equipments { get; set; }
-    public virtual DbSet<ClanMoneyDb> ClanMoney { get; set; }
-    public virtual DbSet<SquadDb> Squads { get; set; }
+    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Schedule> Schedule { get; set; }
+    public virtual DbSet<Player> Players { get; set; }
+    public virtual DbSet<Item> Items { get; set; }
+    public virtual DbSet<EventAttendance> EventAttendences { get; set; }
+    public virtual DbSet<Event> Event { get; set; }
+    public virtual DbSet<EventType> EventTypes { get; set; }
+    public virtual DbSet<Equipment> Equipments { get; set; }
+    public virtual DbSet<ClanMoney> ClanMoney { get; set; }
+    public virtual DbSet<Squad> Squads { get; set; }
 
     /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=ClanControlPanel;Username=postgres;Password=123");*/
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<UserDb>()
+        modelBuilder.Entity<User>()
             .HasOne(u => u.Player)
             .WithOne(p => p.User)
-            .HasForeignKey<PlayerDb>(p => p.UserId);
+            .HasForeignKey<Player>(p => p.UserId);
         
         /*modelBuilder.Entity<ScheduleDb>()
             .HasOne(s => s.PlayerDb)
@@ -51,12 +52,12 @@ public partial class ClanControlPanelContext : DbContext
             .WithMany()
             .HasForeignKey(c => c.PlayerId);*/
         
-        modelBuilder.Entity<EquipmentDb>()
+        modelBuilder.Entity<Equipment>()
             .HasOne(e => e.Player)
             .WithMany(p => p.Equipments)
             .HasForeignKey(e => e.PlayerId);
 
-        modelBuilder.Entity<EquipmentDb>()
+        modelBuilder.Entity<Equipment>()
             .HasOne(e => e.Item)
             .WithMany()
             .HasForeignKey(e => e.ItemId);

@@ -1,6 +1,6 @@
 namespace ClanControlPanel.Core.Models;
 
-public class EventAttendence
+public class EventAttendance
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid EventId { get; set; }

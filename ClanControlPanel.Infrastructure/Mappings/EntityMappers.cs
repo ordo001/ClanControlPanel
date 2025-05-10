@@ -12,10 +12,12 @@ public static class EntityMappers
             Id = db.Id,
             Name = db.Name,
             UserId = db.UserId,
+            User = db.User.ToDomain(),
             SquadId = db.SquadId,
+            Squad = db.Squad.ToDomain(),
             Schedules = db.Schedules?.Select(s => s.ToDomain()).ToList() ?? new List<Schedule>(),
             Equipments = db.Equipments?.Select(e => e.ToDomain()).ToList() ?? new List<Equipment>(),
-            Attendences = db.Attendences?.Select(a => a.ToDomain()).ToList() ?? new List<EventAttendence>()
+            Attendences = db.Attendences?.Select(a => a.ToDomain()).ToList() ?? new List<EventAttendance>()
         };
     }
 
@@ -25,11 +27,13 @@ public static class EntityMappers
         {
             Id = domain.Id,
             Name = domain.Name,
+            User = domain.User.ToDb(),
             UserId = domain.UserId,
             SquadId = domain.SquadId,
+            Squad = domain.Squad.ToDb(),
             Schedules = domain.Schedules?.Select(s => s.ToDb()).ToList() ?? new List<ScheduleDb>(),
             Equipments = domain.Equipments?.Select(e => e.ToDb()).ToList() ?? new List<EquipmentDb>(),
-            Attendences = domain.Attendences?.Select(a => a.ToDb()).ToList() ?? new List<EventAttendenceDb>()
+            Attendences = domain.Attendences?.Select(a => a.ToDb()).ToList() ?? new List<EventAttendanceDb>()
         };
     }
     
@@ -119,26 +123,24 @@ public static class EntityMappers
         new Event
         {
             Id = db.Id,
-            Name = db.Name,
             Date = db.Date,
             EventTypeId = db.EventTypeId,
             Status = db.Status,
-            Attendences = db.Attendences?.Select(a => a.ToDomain()).ToList() ?? new List<EventAttendence>()
+            Attendences = db.Attendences?.Select(a => a.ToDomain()).ToList() ?? new List<EventAttendance>()
         };
 
     public static EventDb ToDb(this Event domain) =>
         new EventDb
         {
             Id = domain.Id,
-            Name = domain.Name,
             Date = domain.Date,
             EventTypeId = domain.EventTypeId,
             Status = domain.Status,
-            Attendences = domain.Attendences?.Select(a => a.ToDb()).ToList() ?? new List<EventAttendenceDb>()
+            Attendences = domain.Attendences?.Select(a => a.ToDb()).ToList() ?? new List<EventAttendanceDb>()
         };
 
-    public static EventAttendence ToDomain(this EventAttendenceDb db) =>
-        new EventAttendence
+    public static EventAttendance ToDomain(this EventAttendanceDb db) =>
+        new EventAttendance
         {
             Id = db.Id,
             EventId = db.EventId,
@@ -148,8 +150,8 @@ public static class EntityMappers
             AbsenceReason = db.AbsenceReason
         };
 
-    public static EventAttendenceDb ToDb(this EventAttendence domain) =>
-        new EventAttendenceDb
+    public static EventAttendanceDb ToDb(this EventAttendance domain) =>
+        new EventAttendanceDb
         {
             Id = domain.Id,
             EventId = domain.EventId,

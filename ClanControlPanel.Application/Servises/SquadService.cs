@@ -1,3 +1,4 @@
+using ClanControlPanel.Application.Exceptions;
 using ClanControlPanel.Core.Interfaces.Services;
 using ClanControlPanel.Core.Models;
 using ClanControlPanel.Infrastructure.Data;
@@ -13,7 +14,7 @@ public class SquadService(ClanControlPanelContext context) : ISquadService
         var squad = await context.Squads.FirstOrDefaultAsync(p => p.Id == squadId);
         if (squad is null)
         {
-            throw new Exception("Отряд не найден");
+            throw new EntityNotFoundException<Squad>(squadId);
         }
 
         try
@@ -32,18 +33,43 @@ public class SquadService(ClanControlPanelContext context) : ISquadService
     {
         try
         {
-            var squad = new SquadDb
+            var squad = new Squad
             {
                 NameSquad = name
             };
             
             await context.Squads.AddAsync(squad);
             await context.SaveChangesAsync();
-            return squad.ToDomain();
+            return squad;
         }
         catch (Exception ex)
         {
             throw new Exception(ex.Message);
         }
+    }
+
+    public async Task<List<Player>> GetPlayersInSquad(Guid squadId)
+    {
+        var squad = await context.Squads.FirstOrDefaultAsync(p => p.Id == squadId);
+        if (squad is null)
+        {
+            throw new EntityNotFoundException<Squad>(squadId);
+        }
+        
+        try
+        {
+            var squads = await context.Players.Where(p => p.SquadId == squadId).ToListAsync();
+            return squads;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+    public async Task<List<Squad>> GetSquads()
+    {
+        var squads = await context.Squads.ToListAsync();
+        return squads;
     }
 }

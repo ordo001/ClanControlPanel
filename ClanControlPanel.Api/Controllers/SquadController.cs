@@ -21,5 +21,33 @@ namespace ClanControlPanel.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetSquads()
+        {
+            try
+            {
+                var squads = await squadService.GetSquads();
+                return Ok(squads);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        
+        [HttpGet("/Players/{squadId}")]
+        public async Task<IActionResult> GetSquads(Guid squadId)
+        {
+            try
+            {
+                var players = await squadService.GetPlayersInSquad(squadId);
+                return Ok(players);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace ClanControlPanel.Api.Controllers
     public class AuthController(IUserServices userServices) : ControllerBase
     {
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] AuthRequest authRequest)
         {
             var token = await userServices.Login(authRequest.Login, authRequest.Password);
@@ -27,7 +27,7 @@ namespace ClanControlPanel.Api.Controllers
             return Ok(token);
         }
 
-        [HttpGet("ValidateToken")]
+        [HttpGet("validate-token")]
         [Authorize]
         public async Task<IActionResult> ValidateToken()
         {
