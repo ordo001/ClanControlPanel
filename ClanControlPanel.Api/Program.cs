@@ -21,6 +21,7 @@ public class Program
         builder.Services.AddScoped<IUserServices, UserServise>();
         builder.Services.AddScoped<IPlayerService, PlayerService>();
         builder.Services.AddScoped<ISquadService, SquadService>();
+        builder.Services.AddScoped<IEventService, EventService>();
         builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
         builder.Services.AddScoped<ITokenGenerator, TokenGenerator>();
         builder.Services.AddScoped<IValidatorService, ValidatorService>();

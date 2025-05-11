@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ClanControlPanel.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5fc6d20f3e8cd662abb5964286ed0d856cda7cee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4a92abbf67e0f42d1851ae7f2428e3e9427e0eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("ClanControlPanel.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ClanControlPanel.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

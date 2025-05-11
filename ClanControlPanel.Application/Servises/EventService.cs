@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices.ComTypes;
 using ClanControlPanel.Application.Exceptions;
+using ClanControlPanel.Core.DTO.Response;
 using ClanControlPanel.Core.Models;
 using ClanControlPanel.Infrastructure.Data;
 using ClanControlPanel.Infrastructure.Mappings;
@@ -133,6 +134,7 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
                 {
                     EventId = eventId,
                     PlayerId = playerId,
+                    IsExcused = null,
                     WasPresent = true
                 };
                 await context.EventAttendences.AddAsync(attendance);
@@ -195,4 +197,68 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
             throw;
         }
     }
+
+    public async Task<List<AttendanceDto>> GetPlayerAttendance(Guid playerId)
+    {
+        try
+        {
+            var player = await playerService.GetPlayerById(playerId);
+            
+            var attendancesDto = await context.EventAttendences
+                .Include(e => e.Event)
+                .ThenInclude(e => e.EventType)
+                .Include(e => e.Player)
+                .Where(e => e.WasPresent)
+                .Select(e => new AttendanceDto
+                {
+                    Id = e.Id,
+                    EventId = e.EventId,
+                    EventName = e.Event.EventType.NameEventType,
+                    PlayerId = e.PlayerId,
+                    PlayerName = e.Player.Name,
+                    WasPresent = e.WasPresent,
+                    IsExcused = e.IsExcused,
+                    AbsenceReason = e.AbsenceReason
+                })
+                .ToListAsync();
+
+            return attendancesDto;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
+
+    public async Task<List<AttendanceDto>> GetEventAttendance(Guid eventId)
+    {
+        try
+        {
+            var eventEntity = await GetEventById(eventId);
+            
+            var attendancesDto = await context.EventAttendences
+                .Include(e => e.Event)
+                .ThenInclude(e => e.EventType)
+                .Include(e => e.Player)
+                .Where(e => e.WasPresent)
+                .Select(e => new AttendanceDto
+                {
+                    Id = e.Id,
+                    EventId = e.EventId,
+                    EventName = e.Event.EventType.NameEventType,
+                    PlayerId = e.PlayerId,
+                    PlayerName = e.Player.Name,
+                    WasPresent = e.WasPresent,
+                    IsExcused = e.IsExcused,
+                    AbsenceReason = e.AbsenceReason
+                })
+                .ToListAsync();
+
+            return attendancesDto;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    } 
 }

@@ -49,7 +49,7 @@ namespace ClanControlPanel.Api.Controllers
             }
         }
         
-        [HttpGet("{playerId}")]
+        [HttpGet("/api/Players/{playerId}")]
         public async Task<IActionResult> GetPlayers(Guid playerId)
         {
             try
@@ -67,7 +67,7 @@ namespace ClanControlPanel.Api.Controllers
             }
         }
         
-        [HttpDelete("{playerId}")]
+        [HttpDelete("/api/Players/{playerId}")]
         public async Task<IActionResult> DeletePlayer(Guid playerId)
         {
             try
@@ -85,7 +85,7 @@ namespace ClanControlPanel.Api.Controllers
             }
         }
         
-        [HttpPost("/Squads/{squadId}/Players/{playerId}")]
+        [HttpPost("/api/Squads/{squadId}/Players/{playerId}")]
         public async Task<IActionResult> AddPlayerInSquad(Guid squadId, Guid playerId)
         {
             try
@@ -107,7 +107,7 @@ namespace ClanControlPanel.Api.Controllers
             }
         }
         
-        [HttpDelete("/Squads/{squadId}/Players/{playerId}")]
+        [HttpDelete("/api/Squads/{squadId}/Players/{playerId}")]
         public async Task<IActionResult> RemovePlayerFromSquad(Guid squadId, Guid playerId)
         {
             try
@@ -128,5 +128,6 @@ namespace ClanControlPanel.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
     }
 }

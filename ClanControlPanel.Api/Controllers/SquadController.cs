@@ -36,7 +36,7 @@ namespace ClanControlPanel.Api.Controllers
             }
         }
         
-        [HttpGet("/Players/{squadId}")]
+        [HttpGet("/api/Players/{squadId}")]
         public async Task<IActionResult> GetSquads(Guid squadId)
         {
             try

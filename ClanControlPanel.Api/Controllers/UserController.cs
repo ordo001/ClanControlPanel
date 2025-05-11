@@ -27,7 +27,7 @@ namespace ClanControlPanel.Api.Controllers
             }
         }
 
-        [HttpDelete("{userId}")]
+        [HttpDelete("/api/{userId}")]
         public async Task<IActionResult> RemoveUser(Guid userId)
         {
             try

@@ -51,7 +51,7 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         var player = await context.Players.FirstOrDefaultAsync(p => p.Id == id);
         if (player is null)
         {
-            throw new Exception("Игрок не найден");
+            throw new EntityNotFoundException<Player>(id);
         }
 
         return player;

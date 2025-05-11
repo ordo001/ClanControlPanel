@@ -56,6 +56,42 @@ namespace ClanControlPanel.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
+        [HttpGet("/api/Events/Attendances/Player/{playerId}")]
+        public async Task<IActionResult> GetPlayerAttendances(Guid playerId)
+        {
+            try
+            {
+                var attendances = await eventService.GetPlayerAttendance(playerId);
+                return Ok(attendances);
+            }
+            catch (EntityNotFoundException<Player> ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException?.Message);
+            }
+        }
+        
+        [HttpGet("/api/Events/{eventId}/Attendances")]
+        public async Task<IActionResult> GetEventAttendances(Guid eventId)
+        {
+            try
+            {
+                var attendances = await eventService.GetEventAttendance(eventId);
+                return Ok(attendances);
+            }
+            catch (EntityNotFoundException<Event> ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException?.Message);
+            }
+        }
 
         [HttpPost("/api/Events/{eventId}/Attendances/Player/{playerId}")]
         public async Task<IActionResult> MarkPlayerInEvent(Guid eventId, Guid playerId)

@@ -27,14 +27,14 @@ namespace ClanControlPanel.Api.Controllers
             return Ok(token);
         }
 
-        [HttpGet("validate-token")]
+        [HttpGet("/api/validate-token")]
         [Authorize]
         public async Task<IActionResult> ValidateToken()
         {
             return Ok(new {isValid = true});
         }
 
-        [HttpPost("Logout")]
+        [HttpPost("/api/logout")]
         [Authorize]
         public async Task<IActionResult> Logout()
         {
