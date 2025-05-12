@@ -1,0 +1,25 @@
+.Card {
+  background-color: rgb(53, 53, 53);
+  padding: 10px;
+  margin: 10px;
+  margin-top: 20px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center; /* Выравнивание по центру */
+  justify-content: space-between; /* Разносит элементы по краям */
+}
+
+.UserInfo {
+  margin: 10px;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.Buttons {
+  text-align: right;
+  margin: 0px;
+  padding: 5px;
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,8 @@
+dialog {
+  background-color: rgb(51, 51, 51);
+  border-radius: 20px;
+  border-color: rgb(197, 197, 197);
+  text-align: center;
+  padding: 20px;
+  top: 35%;
+}

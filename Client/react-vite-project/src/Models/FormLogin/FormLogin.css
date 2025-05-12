@@ -1,0 +1,15 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Отступы между элементами */
+  align-items: center;
+}
+
+.form-group {
+  margin-bottom: 10px; /* Отступ снизу */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px; /* Отступ между меткой и полем ввода */
+}
