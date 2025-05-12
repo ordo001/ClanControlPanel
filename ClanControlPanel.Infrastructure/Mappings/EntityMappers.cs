@@ -17,7 +17,7 @@ public static class EntityMappers
             Squad = db.Squad.ToDomain(),
             Schedules = db.Schedules?.Select(s => s.ToDomain()).ToList() ?? new List<Schedule>(),
             Equipments = db.Equipments?.Select(e => e.ToDomain()).ToList() ?? new List<Equipment>(),
-            Attendences = db.Attendences?.Select(a => a.ToDomain()).ToList() ?? new List<EventAttendance>()
+            Attendances = db.Attendences?.Select(a => a.ToDomain()).ToList() ?? new List<EventAttendance>()
         };
     }
 
@@ -33,7 +33,7 @@ public static class EntityMappers
             Squad = domain.Squad.ToDb(),
             Schedules = domain.Schedules?.Select(s => s.ToDb()).ToList() ?? new List<ScheduleDb>(),
             Equipments = domain.Equipments?.Select(e => e.ToDb()).ToList() ?? new List<EquipmentDb>(),
-            Attendences = domain.Attendences?.Select(a => a.ToDb()).ToList() ?? new List<EventAttendanceDb>()
+            Attendences = domain.Attendances?.Select(a => a.ToDb()).ToList() ?? new List<EventAttendanceDb>()
         };
     }
     

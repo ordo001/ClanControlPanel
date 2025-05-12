@@ -10,39 +10,21 @@ namespace ClanControlPanel.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     /*[Authorize]*/
-    public class UserController(IUserServices userServise, IValidatorService validator, IConfiguration config) : ControllerBase
+    public class UserController(IUserServices userServise, IValidatorService validator, IConfiguration config)
+        : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-
-            try
-            {
-                var userList = await userServise.GetUsers();
-                return Ok(userList);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var userList = await userServise.GetUsers();
+            return Ok(userList);
         }
 
         [HttpDelete("/api/{userId}")]
         public async Task<IActionResult> RemoveUser(Guid userId)
         {
-            try
-            {
-                await userServise.RemoveUserById(userId);
-                return Ok();
-            }
-            catch (EntityNotFoundException<User> ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await userServise.RemoveUserById(userId);
+            return Ok();
         }
 
         [HttpPost]
@@ -54,46 +36,21 @@ namespace ClanControlPanel.Api.Controllers
                 return BadRequest(validationResult);
             }
 
-            try
-            {
-                var result = await userServise.Register(
-                    registerUserRequest.Login,
-                    registerUserRequest.Password,
-                    registerUserRequest.Name,
-                    registerUserRequest.Role!);
-                
-                return Ok(result);
-            }
-            catch (EntityIsExists<User> ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message); 
-            }
+            var result = await userServise.Register(
+                registerUserRequest.Login,
+                registerUserRequest.Password,
+                registerUserRequest.Name,
+                registerUserRequest.Role!);
+
+            return Ok(result);
         }
 
         [HttpPatch]
         public async Task<IActionResult> Update([FromBody] UpdateUserRequest updateUserRequest)
         {
-            try
-            {
-                await userServise.UpdateUser(updateUserRequest.Id, updateUserRequest.Name, updateUserRequest.Login, updateUserRequest.Password);
-                return Ok();
-            }
-            catch (EntityNotFoundException<User> ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (EntityIsExists<User> ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await userServise.UpdateUser(updateUserRequest.Id, updateUserRequest.Name, updateUserRequest.Login,
+                updateUserRequest.Password);
+            return Ok();
         }
     }
 }

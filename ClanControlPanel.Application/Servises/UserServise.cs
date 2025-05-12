@@ -14,7 +14,10 @@ using ClanControlPanel.Infrastructure.Mappings;
 
 namespace ClanControlPanel.Application.Servises
 {
-    public class UserServise(IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator, ClanControlPanelContext context) : IUserServices
+    public class UserServise(
+        IPasswordHasher passwordHasher,
+        ITokenGenerator tokenGenerator,
+        ClanControlPanelContext context) : IUserServices
     {
         public async Task<List<User>> GetUsers()
         {
@@ -41,13 +44,15 @@ namespace ClanControlPanel.Application.Servises
             {
                 throw new EntityNotFoundException<User>(login);
             }
+
             var resultVerify = passwordHasher.Verify(password, user.PasswordHash);
 
             if (resultVerify)
             {
                 return tokenGenerator.GenerateToken(user);
             }
-            throw new Exception("Неверный логин или пароль"); 
+
+            throw new Exception("Неверный логин или пароль");
         }
 
         public async Task<string?> Register(string login, string password, string name, string? role)
@@ -56,6 +61,7 @@ namespace ClanControlPanel.Application.Servises
             {
                 throw new EntityIsExists<User>(login);
             }
+
             var passwordHash = passwordHasher.GenerateHash(password);
 
             var user = new User
@@ -85,15 +91,8 @@ namespace ClanControlPanel.Application.Servises
                 throw new EntityNotFoundException<User>(id);
             }
 
-            try
-            {
-                context.Users.Remove(user);
-                await context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            context.Users.Remove(user);
+            await context.SaveChangesAsync();
         }
 
         public async Task UpdateUser(Guid id, string? name, string? login, string? password)
@@ -115,6 +114,7 @@ namespace ClanControlPanel.Application.Servises
                 {
                     throw new EntityIsExists<User>(login);
                 }
+
                 user.Login = login;
             }
 
@@ -124,15 +124,8 @@ namespace ClanControlPanel.Application.Servises
                 user.PasswordHash = NewPasswordHash;
             }
 
-            try
-            {
-                context.Users.Update(user);
-                await context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            context.Users.Update(user);
+            await context.SaveChangesAsync();
         }
     }
 }

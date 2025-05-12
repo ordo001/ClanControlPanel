@@ -17,6 +17,7 @@ namespace ClanControlPanel.Application.Servises
             IConfiguration configuration)
         {
             var authSettings = configuration.GetSection(nameof(AuthSettings)).Get<AuthSettings>();
+            
             serviceCollection.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(o =>
             {
                 o.TokenValidationParameters = new TokenValidationParameters

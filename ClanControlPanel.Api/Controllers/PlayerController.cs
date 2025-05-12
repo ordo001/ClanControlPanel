@@ -15,119 +15,52 @@ namespace ClanControlPanel.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPlayers()
         {
-            try
+            var players = await playerService.GetPlayers();
+
+            return Ok(players.Select(p => new PlayersResponse
             {
-                var players = await playerService.GetPlayers();
-                
-                return Ok(players.Select(p => new PlayersResponse
-                {
-                    Id = p.Id,
-                    Name = p.Name
-                }));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                Id = p.Id,
+                Name = p.Name
+            }));
         }
 
         [HttpPost]
         public async Task<IActionResult> AddPlayer([FromBody] PlayerAddRequest playerAddRequest)
         {
-            try
-            {
-                await playerService.AddPlayer(playerAddRequest.UserId, playerAddRequest.Name);
-                return Ok();
-            }
-            catch (EntityNotFoundException<Player> ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await playerService.AddPlayer(playerAddRequest.UserId, playerAddRequest.Name);
+            return Ok();
         }
-        
+
         [HttpGet("/api/Players/{playerId}")]
         public async Task<IActionResult> GetPlayers(Guid playerId)
         {
-            try
+            var player = await playerService.GetPlayerById(playerId);
+            return Ok(new PlayersResponse
             {
-                var player = await playerService.GetPlayerById(playerId);
-                return Ok(new PlayersResponse
-                {
-                    Id = player.Id,
-                    Name = player.Name
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                Id = player.Id,
+                Name = player.Name
+            });
         }
-        
+
         [HttpDelete("/api/Players/{playerId}")]
         public async Task<IActionResult> DeletePlayer(Guid playerId)
         {
-            try
-            {
-                await playerService.RemovePlayerById(playerId);
-                return Ok();
-            }
-            catch (EntityNotFoundException<Player> ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await playerService.RemovePlayerById(playerId);
+            return Ok();
         }
-        
+
         [HttpPost("/api/Squads/{squadId}/Players/{playerId}")]
         public async Task<IActionResult> AddPlayerInSquad(Guid squadId, Guid playerId)
         {
-            try
-            {
-                await playerService.AddPlayerInSquad(playerId, squadId);
-                return Ok();
-            }
-            catch (EntityNotFoundException<Player> ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (EntityNotFoundException<Squad> ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await playerService.AddPlayerInSquad(playerId, squadId);
+            return Ok();
         }
-        
+
         [HttpDelete("/api/Squads/{squadId}/Players/{playerId}")]
         public async Task<IActionResult> RemovePlayerFromSquad(Guid squadId, Guid playerId)
         {
-            try
-            {
-                await playerService.RemovePlayerFromSquad(playerId);
-                return Ok();
-            }
-            catch (EntityNotFoundException<Player> ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (PlayerIsNotInSquad<Player> ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await playerService.RemovePlayerFromSquad(playerId);
+            return Ok();
         }
-        
     }
 }

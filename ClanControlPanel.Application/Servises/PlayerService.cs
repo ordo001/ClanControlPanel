@@ -11,15 +11,8 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
 {
     public async Task<List<Player>> GetPlayers()
     {
-        try
-        {
-            var players = await context.Players.ToListAsync();
-            return players;
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        var players = await context.Players.ToListAsync();
+        return players;
     }
 
     public async Task AddPlayer(Guid userId, string name)
@@ -30,20 +23,13 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
             throw new EntityNotFoundException<User>(userId);
         }
 
-        try
+        var player = new Player
         {
-            var player = new Player
-            {
-                Name = name,
-                UserId = userId
-            };
-            await context.Players.AddAsync(player);
-            await context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
+            Name = name,
+            UserId = userId
+        };
+        await context.Players.AddAsync(player);
+        await context.SaveChangesAsync();
     }
 
     public async Task<Player> GetPlayerById(Guid id)
@@ -76,15 +62,8 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
             throw new EntityNotFoundException<Player>(id);
         }
 
-        try
-        {
-            context.Players.Remove(player);
-            await context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        context.Players.Remove(player);
+        await context.SaveChangesAsync();
     }
 
     public async Task AddPlayerInSquad(Guid playerId, Guid squadId)
@@ -94,23 +73,16 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         {
             throw new EntityNotFoundException<Player>(playerId);
         }
+
         var squad = await context.Squads.FirstOrDefaultAsync(p => p.Id == squadId);
         if (squad is null)
         {
             throw new EntityNotFoundException<Squad>(squadId);
         }
 
-        try
-        {
-            player.SquadId = squadId;
-            context.Update(player);
-            await context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
-        
+        player.SquadId = squadId;
+        context.Update(player);
+        await context.SaveChangesAsync();
     }
 
     public async Task RemovePlayerFromSquad(Guid playerId)
@@ -126,15 +98,8 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
             throw new PlayerIsNotInSquad<Player>(playerId);
         }
 
-        try
-        {
-            player.SquadId = null;
-            context.Update(player);
-            await context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        player.SquadId = null;
+        context.Update(player);
+        await context.SaveChangesAsync();
     }
 }

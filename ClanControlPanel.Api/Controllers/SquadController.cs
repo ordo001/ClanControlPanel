@@ -11,43 +11,22 @@ namespace ClanControlPanel.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSquad([FromBody] string name)
         {
-            try
-            {
-                await squadService.CreateSquad(name);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            await squadService.CreateSquad(name);
+            return Ok();
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetSquads()
         {
-            try
-            {
-                var squads = await squadService.GetSquads();
-                return Ok(squads);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var squads = await squadService.GetSquads();
+            return Ok(squads);
         }
-        
-        [HttpGet("/api/Players/{squadId}")]
+
+        [HttpGet("/api/Squads/{squadId}/Players")]
         public async Task<IActionResult> GetSquads(Guid squadId)
         {
-            try
-            {
-                var players = await squadService.GetPlayersInSquad(squadId);
-                return Ok(players);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var players = await squadService.GetPlayersInSquad(squadId);
+            return Ok(players);
         }
     }
 }

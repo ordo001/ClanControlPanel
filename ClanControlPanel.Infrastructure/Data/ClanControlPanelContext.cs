@@ -37,21 +37,6 @@ public partial class ClanControlPanelContext : DbContext
             .WithOne(p => p.User)
             .HasForeignKey<Player>(p => p.UserId);
         
-        /*modelBuilder.Entity<ScheduleDb>()
-            .HasOne(s => s.PlayerDb)
-            .WithMany()
-            .HasForeignKey(s => s.PlayerId);*/
-        
-        /*modelBuilder.Entity<GoldenDropAttendanceDb>()
-            .HasOne(g => g.PlayerDb)
-            .WithMany()
-            .HasForeignKey(g => g.PlayerId);*/
-        
-        /*modelBuilder.Entity<ClanWarAttendanceDb>()
-            .HasOne(c => c.PlayerDb)
-            .WithMany()
-            .HasForeignKey(c => c.PlayerId);*/
-        
         modelBuilder.Entity<Equipment>()
             .HasOne(e => e.Player)
             .WithMany(p => p.Equipments)
@@ -62,9 +47,6 @@ public partial class ClanControlPanelContext : DbContext
             .WithMany()
             .HasForeignKey(e => e.ItemId);
         
-        /*modelBuilder.Entity<SquadDb>()
-            .HasKey(s => s.Id)*/
-
         OnModelCreatingPartial(modelBuilder);
     }
 
