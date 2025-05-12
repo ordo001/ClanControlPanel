@@ -5,7 +5,7 @@ export default function HeaderLogin() {
 
   return (
     <div className="Form">
-      <h1>Добро пожаловать в панель управления</h1>
+      <h1>Добро пожаловать [SOVA]</h1>
       <h2>Авторизуйтесь для продолжения</h2>
     </div>
   );

@@ -12,7 +12,6 @@ export default function MainPage() {
   const [users, setUsers] = useState([]);
 
   const fetchUsers = useCallback(async () => {
-    // const response = await fetch("https://localhost:44307/api/User", {
     const response = await fetch(`${apiUrl}/api/User`, {
       method: "GET",
       credentials: "include",

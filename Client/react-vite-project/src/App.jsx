@@ -14,32 +14,25 @@ import MainPage from "./Pages/MainPage/MainPage";
 function App() {
   const { isAuthenticated, loading } = useAuth();
 
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-content">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Загрузка...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    // <>
-    //   <Router>
-    //     <Routes>
-    //       <Route
-    //         path="/"
-    //         element={
-    //           !isAuthenticated ? <LoginPage /> : <Navigate to="/MainPanel" />
-    //           //<LoginPage />
-    //         }
-    //       />
-    //       {/* <Route path="/" element={<MainPage />} /> */}
-    //       <Route
-    //         path="/MainPanel"
-    //         element={
-    //           isAuthenticated ? <MainPanel /> : <Navigate to="/" />
-    //           //<MainPanel />
-    //         }
-    //       />
-    //     </Routes>
-    //   </Router>
-    // </>
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route
+            path="/"
+            element={!isAuthenticated ? <LoginPage /> : <MainPage />}
+          />
         </Routes>
       </Router>
     </>

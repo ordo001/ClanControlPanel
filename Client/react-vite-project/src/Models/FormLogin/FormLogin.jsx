@@ -13,12 +13,13 @@ export default function FormLogin() {
   const [modalNotFound, setModalNotFound] = useState(false);
   const [modalErrorServer, setModalErrorServer] = useState(false);
   const { setIsAuthenticated } = useAuth();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const MainPage = () => navigate("/MainPanel");
 
   async function fetchAuth() {
     try {
-      const response = await fetch("http://localhost:5000/api/Auth/login", {
+      const response = await fetch(`${apiUrl}/api/Auth`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,9 +29,9 @@ export default function FormLogin() {
       });
 
       if (response.ok) {
-        //console.log("aboba");
+        console.log(response.headers);
         setIsAuthenticated(true);
-        navigate("/MainPanel");
+        // navigate("/MainPanel");
       }
 
       if (response.status === 404) {
@@ -43,10 +44,6 @@ export default function FormLogin() {
       setModalErrorServer(true);
     }
   }
-
-  // useEffect(() => {
-  //   fetchAuth();
-  // }, []);
 
   return (
     <>
