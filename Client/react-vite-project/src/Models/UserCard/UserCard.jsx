@@ -10,23 +10,23 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [enabledCheckBox, setEnabledCheckBox] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-  async function DeleteUser() {
-    const response = await fetch(`http://localhost:5000/api/User/${Id}`, {
+  async function confirmDelete() {
+    const response = await fetch(`${apiUrl}/api/Users/${Id}`, {
       method: "DELETE",
       credentials: "include",
     });
 
     if (response.ok) {
-      console.log("збс");
       onUpdateListUsers();
-    } else {
-      console.log("анлак");
     }
+    setIsDeleteModalOpen(false);
   }
 
   async function UpdateUser() {
-    const response = await fetch(`http://localhost:5000/api/User/update`, {
+    const response = await fetch(`${apiUrl}/api/Users`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -39,15 +39,6 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
       }),
       credentials: "include",
     });
-
-    console.log(
-      JSON.stringify({
-        Id: Id,
-        Login: login,
-        Password: password,
-        Name: name,
-      })
-    );
 
     if (response.ok) {
       onUpdateListUsers();
@@ -65,6 +56,26 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
 
   return (
     <>
+      {/* Модальное окно подтверждения удаления */}
+      {isDeleteModalOpen && (
+        <Modal open={isDeleteModalOpen}>
+          <img
+            className="imageCloseModal"
+            src="krest.png"
+            alt="Закрыть"
+            onClick={() => setIsDeleteModalOpen(false)}
+          />
+          <h3>Подтверждение удаления</h3>
+          <p>Вы уверены, что хотите удалить пользователя {Name}?</p>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <Button onClick={() => setIsDeleteModalOpen(false)}>Отмена</Button>
+            <Button onClick={confirmDelete} style={{ background: "#ff4444" }}>
+              Удалить
+            </Button>
+          </div>
+        </Modal>
+      )}
+
       {isAddModalOpen && (
         <Modal open={isAddModalOpen}>
           <img
@@ -120,9 +131,10 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
           Имя: {Name} <br />
           Логин: {Login}
         </div>
+
         <div className="Buttons">
           <Button onClick={() => openModal()}>Изменить</Button>
-          <Button onClick={() => DeleteUser()}>Удалить</Button>
+          <Button onClick={() => setIsDeleteModalOpen(true)}>Удалить</Button>
         </div>
       </div>
     </>

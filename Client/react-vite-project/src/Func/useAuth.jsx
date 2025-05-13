@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   async function checkAuth() {
@@ -14,9 +15,17 @@ export function AuthProvider({ children }) {
         credentials: "include",
       });
 
-      setIsAuthenticated(response.ok);
+      if (response.ok) {
+        const data = await response.json();
+        setIsAuthenticated(true);
+        setUser(data.user);
+      } else {
+        setIsAuthenticated(false);
+        setUser(null);
+      }
     } catch (error) {
       setIsAuthenticated(false);
+      setUser(null);
     } finally {
       setLoading(false);
     }
@@ -24,11 +33,11 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [apiUrl]);
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, loading }}
+      value={{ isAuthenticated, setIsAuthenticated, loading, user, checkAuth }}
     >
       {children}
     </AuthContext.Provider>

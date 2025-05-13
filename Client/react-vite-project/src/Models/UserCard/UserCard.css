@@ -23,3 +23,12 @@
   display: flex;
   gap: 10px;
 }
+
+.Button.danger {
+  background-color: #ff4444;
+  color: white;
+}
+
+.Button.danger:hover {
+  background-color: #cc0000;
+}

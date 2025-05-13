@@ -1,16 +1,18 @@
-import "./MainPanelPage.css";
+import "./UsersPanelPage.css";
 import { Navigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 import useAuth from "../../Func/useAuth";
 import HeaderMain from "../../Models/HeaderMain/HeaderMain";
 import UserCard from "../../Models/UserCard/UserCard";
-import { useCallback, useEffect, useState } from "react";
 
-export default function MainPanel() {
-  const { isAuthenticated, loading } = useAuth();
+const apiUrl = import.meta.env.VITE_API_URL;
+
+export default function UsersPanelPage() {
+  // const { isAuthenticated, loading } = useAuth();
   const [users, setUsers] = useState([]);
 
   const fetchUsers = useCallback(async () => {
-    const response = await fetch("http://localhost:5000/api/User", {
+    const response = await fetch(`${apiUrl}/api/Users`, {
       method: "GET",
       credentials: "include",
     });
@@ -28,10 +30,10 @@ export default function MainPanel() {
       {users.length > 0 ? (
         users.map((user) => (
           <UserCard
-            key={user.idUser}
+            key={user.id}
             Name={user.name}
             Login={user.login}
-            Id={user.idUser}
+            Id={user.id}
             onUpdateListUsers={fetchUsers}
           />
         ))

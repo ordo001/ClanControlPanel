@@ -20,6 +20,7 @@ export default function HeaderMain({ onUpdateListUsers }) {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { setIsAuthenticated } = useAuth();
+  const apiUrl = import.meta.env.VITE_API_URL;
   function openModal() {
     setIsAddModalOpen(true);
   }
@@ -30,7 +31,7 @@ export default function HeaderMain({ onUpdateListUsers }) {
 
   async function logout() {
     try {
-      const response = await fetch("http://localhost:5000/api/Auth/logout", {
+      const response = await fetch(`${apiUrl}/api/Auth/Logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +50,7 @@ export default function HeaderMain({ onUpdateListUsers }) {
 
   async function addUser() {
     try {
-      const response = await fetch("http://localhost:5000/api/User/add", {
+      const response = await fetch(`${apiUrl}/api/Users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

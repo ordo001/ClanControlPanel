@@ -12,7 +12,7 @@ export default function FormLogin() {
   const [password, setPassword] = useState("");
   const [modalNotFound, setModalNotFound] = useState(false);
   const [modalErrorServer, setModalErrorServer] = useState(false);
-  const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated, checkAuth } = useAuth();
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const MainPage = () => navigate("/MainPanel");
@@ -29,9 +29,9 @@ export default function FormLogin() {
       });
 
       if (response.ok) {
-        console.log(response.headers);
+        await checkAuth();
         setIsAuthenticated(true);
-        // navigate("/MainPanel");
+        navigate("/squads");
       }
 
       if (response.status === 404) {
@@ -40,7 +40,6 @@ export default function FormLogin() {
 
       setModalErrorServer(false);
     } catch (error) {
-      console.log("Нет связи с сервером.", error);
       setModalErrorServer(true);
     }
   }
