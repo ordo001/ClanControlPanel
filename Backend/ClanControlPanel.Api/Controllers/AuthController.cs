@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
 
 namespace ClanControlPanel.Api.Controllers
 {
@@ -13,7 +14,7 @@ namespace ClanControlPanel.Api.Controllers
     public class AuthController(IUserServices userServices) : ControllerBase
     {
 
-        [HttpPost("login")]
+        [HttpPost("/api/Auth")]
         public async Task<IActionResult> Login([FromBody] AuthRequest authRequest)
         {
             var token = await userServices.Login(authRequest.Login, authRequest.Password);
@@ -22,19 +23,40 @@ namespace ClanControlPanel.Api.Controllers
                 return NotFound();
             }
 
-            HttpContext.Response.Cookies.Append("JwtMonster",token);
+            /*Response.Cookies.Append("JwtMonster",token);*/
 
-            return Ok(token);
+            Response.Cookies.Append("JwtMonster", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTimeOffset.UtcNow.AddDays(1)
+            });
+            
+            return Ok(new {
+                token = token
+            });
         }
 
-        [HttpGet("/api/validate-token")]
+        [HttpGet("/api/Auth/Validate-token")]
         [Authorize]
         public async Task<IActionResult> ValidateToken()
         {
-            return Ok(new {isValid = true});
+            var user = await userServices.GetUserById(Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value));
+            return Ok(new
+            {
+                isValid = true,
+                user = new
+                {
+                    id = user.Id,
+                    login = user.Login,
+                    name = user.Name,
+                    role = user.Role
+                }
+            });
         }
 
-        [HttpPost("/api/logout")]
+        [HttpPost("/api/Auth/Logout")]
         [Authorize]
         public async Task<IActionResult> Logout()
         {

@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ClanControlPanel.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using ClanControlPanel.Infrastructure.Mappings;
 
 namespace ClanControlPanel.Application.Servises
 {
@@ -55,7 +54,7 @@ namespace ClanControlPanel.Application.Servises
             throw new Exception("Неверный логин или пароль");
         }
 
-        public async Task<string?> Register(string login, string password, string name, string? role)
+        public async Task<string?> Register(string login, string password, string name, Role? role)
         {
             if (await context.Users.FirstOrDefaultAsync(u => u.Login == login) is not null)
             {
@@ -69,18 +68,11 @@ namespace ClanControlPanel.Application.Servises
                 Login = login,
                 PasswordHash = passwordHash,
                 Name = name,
-                Role = role ?? "User"
+                Role = role ?? Role.User
             };
-            try
-            {
-                await context.Users.AddAsync(user);
-                await context.SaveChangesAsync();
-                return login;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            await context.Users.AddAsync(user);
+            await context.SaveChangesAsync();
+            return login;
         }
 
         public async Task RemoveUserById(Guid id)

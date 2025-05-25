@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClanControlPanel.Core.Models;
 
 namespace ClanControlPanel.Core.DTO
 {
@@ -15,6 +16,6 @@ namespace ClanControlPanel.Core.DTO
         public string Password { get; set; } = string.Empty;
         [Required(ErrorMessage = "Укажите имя"), MinLength(2, ErrorMessage = "Минимальная длинна имени - 2 символа")]
         public string Name { get; set; } = string.Empty;
-        public string? Role { get; set; }
+        public Role? Role { get; set; }
     }
 }

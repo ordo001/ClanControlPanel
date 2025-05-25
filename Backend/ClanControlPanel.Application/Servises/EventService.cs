@@ -3,7 +3,6 @@ using ClanControlPanel.Application.Exceptions;
 using ClanControlPanel.Core.DTO.Response;
 using ClanControlPanel.Core.Models;
 using ClanControlPanel.Infrastructure.Data;
-using ClanControlPanel.Infrastructure.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClanControlPanel.Core.Interfaces.Services;
@@ -12,22 +11,15 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
 {
     public async Task<List<Event>> GetEvents()
     {
-        try
-        {
-            var events = await context.Event.ToListAsync();
-            return events;
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        var events = await context.Events.ToListAsync();
+        return events;
     }
 
     public async Task<Event> GetEventById(Guid eventId)
     {
-        var eventEntity = await context.Event.FirstOrDefaultAsync(p => p.Id == eventId);
+        var eventEntity = await context.Events.FirstOrDefaultAsync(p => p.Id == eventId);
         if (eventEntity is null)
-            throw new Exception("Событие не найдено");
+            throw new EntityNotFoundException<Event>(eventId);
 
         return eventEntity;
     }
@@ -40,53 +32,58 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
             EventTypeId = eventTypeId,
             Status = status
         };
-        await context.Event.AddAsync(eventEntity);
+        await context.Events.AddAsync(eventEntity);
         await context.SaveChangesAsync();
     }
 
     public async Task RemoveEvent(Guid eventId)
     {
-        var eventEntity = await context.Event.FirstOrDefaultAsync(p => p.Id == eventId);
+        var eventEntity = await context.Events.FirstOrDefaultAsync(p => p.Id == eventId);
         if (eventEntity is null)
             throw new EntityNotFoundException<Event>(eventId);
-        context.Event.Remove(eventEntity);
+        context.Events.Remove(eventEntity);
         await context.SaveChangesAsync();
     }
 
-    public async Task AddEventAttendanceForOnePlayer(Guid eventId, Guid playerId, bool wasPresent,
-        bool? isExcused, string? reason)
+    /// <summary>
+    /// Отметить одного игрока в событии с конкретным статусом посещаемости.
+    /// </summary>
+    public async Task SetAttendance(
+        Guid eventId,
+        Guid playerId,
+        AttendanceStatus status,
+        string? absenceReason = null)
     {
-        var eventEntity = await context.Event.FirstOrDefaultAsync(p => p.Id == eventId);
-        if (eventEntity is null)
+        var ev = await context.Events.FindAsync(eventId);
+        if (ev == null) 
             throw new EntityNotFoundException<Event>(eventId);
 
-        var player = await context.Players.FirstOrDefaultAsync(p => p.Id == playerId);
-        if (player is null)
+        var player = await playerService.GetPlayerById(playerId);
+        if (player == null)
             throw new EntityNotFoundException<Player>(playerId);
 
-        var eventAttendance = new EventAttendance
-        {
-            EventId = eventId,
-            PlayerId = playerId,
-            WasPresent = wasPresent
-        };
+        var attendance = await context.EventAttendances
+            .SingleOrDefaultAsync(a => a.EventId == eventId && a.PlayerId == playerId);
 
-        switch (isExcused)
+        if (attendance == null)
         {
-            case true:
-                eventAttendance.IsExcused = true;
-                break;
-            case false:
-                eventAttendance.IsExcused = false;
-                eventAttendance.AbsenceReason = reason;
-                break;
+            attendance = new EventAttendance
+            {
+                EventId = eventId,
+                PlayerId = playerId
+            };
+            context.EventAttendances.Add(attendance);
         }
 
-        await context.EventAttendences.AddAsync(eventAttendance);
+        attendance.Status = status;
+        attendance.AbsenceReason = (status == AttendanceStatus.AbsentUnexcused || status == AttendanceStatus.AbsentExcused)
+            ? absenceReason
+            : null;
+
         await context.SaveChangesAsync();
     }
 
-    public async Task MarkPlayerInEvent(Guid eventId, Guid playerId)
+    /*public async Task MarkPlayerInEvent(Guid eventId, Guid playerId)
     {
         var eventEntity = await context.Event.SingleOrDefaultAsync(p => p.Id == eventId);
         if (eventEntity is null)
@@ -118,99 +115,147 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
         }
 
         await context.SaveChangesAsync();
-    }
+    }*/
 
-    public async Task MarkListPlayersInEvent(Guid eventId, List<string> playerNameList)
+    /// <summary>
+    /// Отметить список игроков как присутствующих.
+    /// </summary>
+    public async Task MarkPlayersPresent(Guid eventId, IEnumerable<Guid> playerIds)
     {
-        var eventEntity = await context.Event.SingleOrDefaultAsync(p => p.Id == eventId);
-        if (eventEntity is null)
+        var ev = await context.Events.FindAsync(eventId);
+        if (ev == null) 
             throw new EntityNotFoundException<Event>(eventId);
 
-        var listMarkPlayers = new List<EventAttendance>();
-        foreach (var playerName in playerNameList)
+        var attendances = new List<EventAttendance>();
+
+        foreach (var playerId in playerIds)
         {
-            var player =
-                await playerService
-                    .GetPlayerByName(
-                        playerName); // Вылетит исклбчение, если ник некорректный и ни один игрок не будет добавлен в ДБ (чтобы не было пропусков)
+            var player = await playerService.GetPlayerById(playerId);
+            if (player == null)
+                throw new EntityNotFoundException<Player>(playerId);
 
-            var attendance = await context.EventAttendences
-                .SingleOrDefaultAsync(a => a.EventId == eventId && a.PlayerId == player.Id);
-            if (attendance is not null) // Если пользователь был отмечен как неприсутствующий, то отмечаем как присутсвующего
+            var att = await context.EventAttendances
+                .SingleOrDefaultAsync(a => a.EventId == eventId && a.PlayerId == playerId);
+
+            if (att == null)
             {
-                attendance.WasPresent = true;
-                attendance.IsExcused = null;
-                attendance.AbsenceReason = null;
-                continue;
+                attendances.Add(new EventAttendance
+                {
+                    EventId = eventId,
+                    PlayerId = playerId,
+                    Status = AttendanceStatus.Present
+                });
             }
-
-            listMarkPlayers.Add(new EventAttendance
-                { EventId = eventId, PlayerId = player.Id }); // Добавляем список всех присутствующих игроков
+            else
+            {
+                att.Status = AttendanceStatus.Present;
+                att.AbsenceReason = null;
+            }
         }
 
-        await context.EventAttendences
-            .AddRangeAsync(listMarkPlayers); // Добавляем заведомо существующих игроков в бд
+        if (attendances.Count > 0)
+            await context.EventAttendances.AddRangeAsync(attendances);
+
         await context.SaveChangesAsync();
     }
 
-    public async Task RemoveMarkPlayerFromEvent(Guid eventId, Guid playerId)
+    public async Task RemoveAttendance(Guid eventId, Guid playerId)
     {
-        var eventAttendance =
-            await context.EventAttendences.FirstOrDefaultAsync(p => p.EventId == eventId && p.PlayerId == playerId);
-        if (eventAttendance is null)
-            throw new EntityNotFoundException<EventAttendance>(eventId);
+        var att = await context.EventAttendances
+            .FirstOrDefaultAsync(a => a.EventId == eventId && a.PlayerId == playerId);
 
-        context.EventAttendences.Remove(eventAttendance);
+        if (att == null)
+            throw new EntityNotFoundException<EventAttendance>($"{eventId}:{playerId}");
+
+        context.EventAttendances.Remove(att);
         await context.SaveChangesAsync();
     }
-
+    
     public async Task<List<AttendanceDto>> GetPlayerAttendance(Guid playerId)
     {
-        var player = await playerService.GetPlayerById(playerId);
+        // проверяем наличие игрока
+        await playerService.GetPlayerById(playerId);
 
-        var attendancesDto = await context.EventAttendences
-            .Include(e => e.Event)
-            .ThenInclude(e => e.EventType)
-            .Include(e => e.Player)
-            .Where(e => e.WasPresent)
-            .Select(e => new AttendanceDto
+        return await context.EventAttendances
+            .Where(a => a.PlayerId == playerId)
+            .Include(a => a.Event).ThenInclude(e => e.EventType)
+            .Select(a => new AttendanceDto
             {
-                Id = e.Id,
-                EventId = e.EventId,
-                EventName = e.Event.EventType.NameEventType,
-                PlayerId = e.PlayerId,
-                PlayerName = e.Player.Name,
-                WasPresent = e.WasPresent,
-                IsExcused = e.IsExcused,
-                AbsenceReason = e.AbsenceReason
+                Id             = a.Id,
+                EventId        = a.EventId,
+                EventName      = a.Event.EventType.NameEventType,
+                PlayerId       = a.PlayerId,
+                PlayerName     = a.Event.Attendances.FirstOrDefault(x => x.PlayerId == playerId)!.Player.Name,
+                Attendance     = a.Status,
+                AbsenceReason  = a.AbsenceReason
             })
             .ToListAsync();
-
-        return attendancesDto;
     }
-
+    
+    
     public async Task<List<AttendanceDto>> GetEventAttendance(Guid eventId)
     {
-        var eventEntity = await GetEventById(eventId);
+        var ev = await GetEventById(eventId);
 
-        var attendancesDto = await context.EventAttendences
-            .Include(e => e.Event)
-            .ThenInclude(e => e.EventType)
-            .Include(e => e.Player)
-            .Where(e => e.WasPresent)
-            .Select(e => new AttendanceDto
+        return await context.EventAttendances
+            .Where(a => a.EventId == eventId)
+            .Include(a => a.Player)
+            .Include(a => a.Event)
+                .ThenInclude(e => e.EventType)
+            .Select(a => new AttendanceDto
             {
-                Id = e.Id,
-                EventId = e.EventId,
-                EventName = e.Event.EventType.NameEventType,
-                PlayerId = e.PlayerId,
-                PlayerName = e.Player.Name,
-                WasPresent = e.WasPresent,
-                IsExcused = e.IsExcused,
-                AbsenceReason = e.AbsenceReason
+                Id             = a.Id,
+                EventId        = a.EventId,
+                EventName     = a.Event.EventType.NameEventType,
+                PlayerId       = a.PlayerId,
+                PlayerName     = a.Player.Name,
+                Attendance     = a.Status,
+                AbsenceReason  = a.AbsenceReason
             })
             .ToListAsync();
+    }
+    
+    public async Task<List<EventStage>> GetEventStages(Guid eventId)
+    {
+        return await context.EventStages
+            .Where(s => s.EventId == eventId)
+            .OrderBy(s => s.StageNumber)
+            .ToListAsync();
+    }
 
-        return attendancesDto;
+    public async Task AddEventStage(Guid eventId, int stageNumber, int amount, string? description = null)
+    {
+        var ev = await context.Events.FindAsync(eventId)
+                 ?? throw new EntityNotFoundException<Event>(eventId);
+
+        var stage = new EventStage
+        {
+            EventId = eventId,
+            StageNumber = stageNumber,
+            Amount = amount,
+            Description = description
+        };
+
+        context.EventStages.Add(stage);
+        await context.SaveChangesAsync();
+    }
+
+    public async Task UpdateEventStage(Guid stageId, int amount, string? description = null)
+    {
+        var stage = await context.EventStages.FindAsync(stageId)
+                    ?? throw new EntityNotFoundException<EventStage>(stageId);
+
+        stage.Amount = amount;
+        stage.Description = description;
+        await context.SaveChangesAsync();
+    }
+
+    public async Task RemoveEventStage(Guid stageId)
+    {
+        var stage = await context.EventStages.FindAsync(stageId)
+                    ?? throw new EntityNotFoundException<EventStage>(stageId);
+
+        context.EventStages.Remove(stage);
+        await context.SaveChangesAsync();
     }
 }

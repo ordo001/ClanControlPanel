@@ -1,6 +1,8 @@
 using System.Text.Json;
 using ClanControlPanel.Application.Exceptions;
 using ClanControlPanel.Core.DTO.Response;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace ClanControlPanel.Api.Middleware;
 
@@ -44,6 +46,11 @@ public class ExceptionMiddleware
                                                          && playerIsNotInSquadEx.GetType().GetGenericTypeDefinition() == typeof(PlayerIsNotInSquad<>):
                     response.StatusCode = StatusCodes.Status400BadRequest;
                     error.Message = playerIsNotInSquadEx.Message;
+                    break;
+                
+                case DbUpdateException when ex.InnerException is PostgresException: 
+                    response.StatusCode = StatusCodes.Status400BadRequest;
+                    error.Message = "Сущность уже добавлена";
                     break;
 
                 default:

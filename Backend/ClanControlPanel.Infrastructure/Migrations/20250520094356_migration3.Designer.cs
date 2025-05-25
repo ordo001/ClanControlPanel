@@ -3,6 +3,7 @@ using System;
 using ClanControlPanel.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ClanControlPanel.Infrastructure.Migrations
 {
     [DbContext(typeof(ClanControlPanelContext))]
-    partial class ClanControlPanelContextModelSnapshot : ModelSnapshot
+    [Migration("20250520094356_migration3")]
+    partial class migration3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,6 +109,9 @@ namespace ClanControlPanel.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("WasPresent")
+                        .HasColumnType("boolean");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
@@ -183,9 +189,6 @@ namespace ClanControlPanel.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int?>("Position")
-                        .HasColumnType("integer");
 
                     b.Property<Guid?>("SquadId")
                         .HasColumnType("uuid");

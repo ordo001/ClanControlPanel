@@ -10,7 +10,6 @@ public class AttendanceDto
     public Guid PlayerId { get; set; }
     public string PlayerName { get; set; } = null!;
 
-    public bool WasPresent { get; set; }
-    public bool? IsExcused { get; set; }
+    public AttendanceStatus Attendance { get; set; }
     public string? AbsenceReason { get; set; }
 }

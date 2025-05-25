@@ -24,10 +24,6 @@ public class ClanMoneyDb
     /// </summary>
     public decimal ChangeAmount { get; set; }
     /// <summary>
-    /// Фиксированная причина (enum)
-    /// </summary>
-    public ClanMoneyChangeReason Reason { get; set; } 
-    /// <summary>
     /// Произвольная причина (только если Reason == Other)
     /// </summary>
     public string? CustomReason { get; set; }

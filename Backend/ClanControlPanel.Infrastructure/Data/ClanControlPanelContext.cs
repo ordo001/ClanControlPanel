@@ -20,9 +20,10 @@ public partial class ClanControlPanelContext : DbContext
     public virtual DbSet<Schedule> Schedule { get; set; }
     public virtual DbSet<Player> Players { get; set; }
     public virtual DbSet<Item> Items { get; set; }
-    public virtual DbSet<EventAttendance> EventAttendences { get; set; }
-    public virtual DbSet<Event> Event { get; set; }
+    public virtual DbSet<EventAttendance> EventAttendances { get; set; }
+    public virtual DbSet<Event> Events { get; set; }
     public virtual DbSet<EventType> EventTypes { get; set; }
+    public virtual DbSet<EventStage> EventStages { get; set; }
     public virtual DbSet<Equipment> Equipments { get; set; }
     public virtual DbSet<ClanMoney> ClanMoney { get; set; }
     public virtual DbSet<Squad> Squads { get; set; }
@@ -36,6 +37,10 @@ public partial class ClanControlPanelContext : DbContext
             .HasOne(u => u.Player)
             .WithOne(p => p.User)
             .HasForeignKey<Player>(p => p.UserId);
+
+        modelBuilder.Entity<User>()
+            .Property(u => u.Role)
+            .HasConversion<string>();
         
         modelBuilder.Entity<Equipment>()
             .HasOne(e => e.Player)

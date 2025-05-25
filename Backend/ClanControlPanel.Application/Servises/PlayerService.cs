@@ -2,7 +2,6 @@ using ClanControlPanel.Application.Exceptions;
 using ClanControlPanel.Core.Interfaces.Services;
 using ClanControlPanel.Core.Models;
 using ClanControlPanel.Infrastructure.Data;
-using ClanControlPanel.Infrastructure.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClanControlPanel.Application.Servises;
@@ -11,23 +10,33 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
 {
     public async Task<List<Player>> GetPlayers()
     {
-        var players = await context.Players.ToListAsync();
+        var players = await context.Players
+            .AsNoTracking()
+            .Include(p => p.Squad)
+            .ToListAsync();
         return players;
     }
 
-    public async Task AddPlayer(Guid userId, string name)
+    public async Task AddPlayer(string name, Guid? squadId)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Login == name);
         if (user is null)
         {
-            throw new EntityNotFoundException<User>(userId);
+            throw new EntityNotFoundException<User>(name);
         }
-
+        
+        var maxPosition = await context.Players
+            .Where(p => p.SquadId == squadId)
+            .MaxAsync(p => p.Position) ?? 0;
+        
         var player = new Player
         {
             Name = name,
-            UserId = userId
+            UserId = user.Id,
+            SquadId = squadId,
+            Position = maxPosition + 1
         };
+        
         await context.Players.AddAsync(player);
         await context.SaveChangesAsync();
     }
@@ -66,7 +75,7 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         await context.SaveChangesAsync();
     }
 
-    public async Task AddPlayerInSquad(Guid playerId, Guid squadId)
+    public async Task AddPlayerInSquad(Guid playerId, Guid squadId, int position)
     {
         var player = await context.Players.FirstOrDefaultAsync(p => p.Id == playerId);
         if (player is null)
@@ -79,9 +88,37 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         {
             throw new EntityNotFoundException<Squad>(squadId);
         }
+        
+        /*bool isSameSquad = player.SquadId == squadId;
+
+        var maxPosition = await context.Players
+            .Where(p => p.SquadId == squadId)
+            .MaxAsync(p => (int?)p.Position) ?? 0;
+        
+        
+        player.SquadId = squadId;
+        player.Position = maxPosition + 1;
+        context.Update(player);
+        await context.SaveChangesAsync();*/
+        
+        var isSameSquad = player.SquadId == squadId;
+        
+        var playersInTargetSquad = await context.Players
+            .Where(p => p.SquadId == squadId && p.Id != playerId)
+            .OrderBy(p => p.Position)
+            .ToListAsync();
+        
+        position = Math.Clamp(position, 0, playersInTargetSquad.Count);
+        
+        playersInTargetSquad.Insert(position, player);
+
+        for (int i = 0; i < playersInTargetSquad.Count; i++)
+        {
+            playersInTargetSquad[i].Position = i;
+        }
 
         player.SquadId = squadId;
-        context.Update(player);
+
         await context.SaveChangesAsync();
     }
 
@@ -99,6 +136,7 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         }
 
         player.SquadId = null;
+        player.Position = null;
         context.Update(player);
         await context.SaveChangesAsync();
     }

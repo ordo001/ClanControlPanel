@@ -19,8 +19,10 @@ namespace ClanControlPanel.Application.Servises
         {
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim("Login", user.Login),
-                new Claim("Name", user.Name)
+                new Claim("Name", user.Name),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
             var jwtToken = new JwtSecurityToken(
                 expires: DateTime.UtcNow.Add(options.Value.Expires),

@@ -8,11 +8,8 @@ public class EventAttendance
     public Guid PlayerId { get; set; }
     public Player Player { get; set; }
     
-    public bool WasPresent { get; set; }
+    /*public bool WasPresent { get; set; }*/
     
-    public bool? IsExcused { get; set; } = false;
-    // null = пришёл
-    // false = отсутствовал, не сообщил
-    // true = отсутствовал, сообщил или по графику
+    public AttendanceStatus Status { get; set; }
     public string? AbsenceReason { get; set; }
 }

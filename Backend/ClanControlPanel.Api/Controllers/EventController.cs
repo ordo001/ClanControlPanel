@@ -2,6 +2,7 @@ using ClanControlPanel.Application.Exceptions;
 using ClanControlPanel.Core.DTO;
 using ClanControlPanel.Core.Interfaces.Services;
 using ClanControlPanel.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,15 +15,15 @@ namespace ClanControlPanel.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetEvents()
         {
-            try
-            {
-                var events = await eventService.GetEvents();
-                return Ok(events);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var events = await eventService.GetEvents();
+            return Ok(events);
+        }
+
+        [HttpGet("{eventId:guid}")]
+        public async Task<IActionResult> GetEventById(Guid eventId)
+        {
+            var ev = await eventService.GetEventById(eventId);
+            return Ok(ev);
         }
 
         [HttpPost]
@@ -32,18 +33,18 @@ namespace ClanControlPanel.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> RemoveEvent([FromBody] EventAddRequest eventAddRequest)
+        [HttpDelete("{eventId:guid}")]
+        public async Task<IActionResult> RemoveEvent(Guid eventId)
         {
-            await eventService.AddEvent(eventAddRequest.Date, eventAddRequest.EventTypeId, eventAddRequest.Status);
-            return Ok();
+            await eventService.RemoveEvent(eventId);
+            return NoContent();
         }
 
         [HttpGet("/api/Events/Attendances/Player/{playerId}")]
         public async Task<IActionResult> GetPlayerAttendances(Guid playerId)
         {
-            var attendances = await eventService.GetPlayerAttendance(playerId);
-            return Ok(attendances);
+            var list = await eventService.GetPlayerAttendance(playerId);
+            return Ok(list);
         }
 
         [HttpGet("/api/Events/{eventId}/Attendances")]
@@ -53,18 +54,54 @@ namespace ClanControlPanel.Api.Controllers
             return Ok(attendances);
         }
 
-        [HttpPost("/api/Events/{eventId}/Attendances/Player/{playerId}")]
-        public async Task<IActionResult> MarkPlayerInEvent(Guid eventId, Guid playerId)
+        [HttpPost("{eventId:guid}/attendances/{playerId:guid}")]
+        public async Task<IActionResult> SetAttendance(Guid eventId, Guid playerId,
+            [FromBody] AttendanceUpdateRequest dto)
         {
-            await eventService.MarkPlayerInEvent(eventId, playerId);
+            await eventService.SetAttendance(eventId, playerId, dto.Status, dto.AbsenceReason);
+            return NoContent();
+        }
+
+        [HttpPost("{eventId:guid}/attendances/players/present")]
+        public async Task<IActionResult> MarkPlayersPresent(Guid eventId, [FromBody] PlayerListRequest dto)
+        {
+            await eventService.MarkPlayersPresent(eventId, dto.PlayerIds);
+            return NoContent();
+        }
+
+        [HttpDelete("{eventId:guid}/attendances/{playerId:guid}")]
+        public async Task<IActionResult> RemoveAttendance(Guid eventId, Guid playerId)
+        {
+            await eventService.RemoveAttendance(eventId, playerId);
+            return NoContent();
+        }
+        
+        [HttpGet("{eventId:guid}/stages")]
+        public async Task<IActionResult> GetEventStages(Guid eventId)
+        {
+            var stages = await eventService.GetEventStages(eventId);
+            return Ok(stages);
+        }
+
+        [HttpPost("{eventId:guid}/stages")]
+        public async Task<IActionResult> AddStage(Guid eventId, [FromBody] EventStageAddRequest dto)
+        {
+            await eventService.AddEventStage(eventId, dto.StageNumber, dto.Amount, dto.Description);
             return Ok();
         }
 
-        [HttpPost("/api/Events/{eventId}/Attendances/Players")]
-        public async Task<IActionResult> MarkPlayerListInEvent(Guid eventId, [FromBody] List<string> playerName)
+        [HttpPut("stages/{stageId:guid}")]
+        public async Task<IActionResult> UpdateStage(Guid stageId, [FromBody] EventStageUpdateRequest dto)
         {
-            await eventService.MarkListPlayersInEvent(eventId, playerName);
-            return Ok();
+            await eventService.UpdateEventStage(stageId, dto.Amount, dto.Description);
+            return NoContent();
+        }
+
+        [HttpDelete("stages/{stageId:guid}")]
+        public async Task<IActionResult> DeleteStage(Guid stageId)
+        {
+            await eventService.RemoveEventStage(stageId);
+            return NoContent();
         }
     }
 }

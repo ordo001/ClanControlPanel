@@ -14,22 +14,7 @@ namespace ClanControlPanel.Core.Models
         public string PasswordHash { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         
-        public string Role { get; set; } = string.Empty;
+        public Role Role { get; set; }
         public Player? Player { get; set; }
-
-        /*public User(string login, string password, string name) {
-            Id = Guid.NewGuid();
-            Login = login;
-            PasswordHash = password;
-            Name = name;
-        }
-        
-        public User(Guid id, string login, string password, string name)
-        {
-            Id = id;
-            Login = login;
-            PasswordHash = password;
-            Name = name;
-        }*/
     }
 }

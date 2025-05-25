@@ -6,9 +6,18 @@ public class Event
     public DateTime Date  { get; set; }
     public Guid EventTypeId { get; set; }
     public EventType EventType { get; set; } 
+    /// <summary>
+    /// Для турнира/потасовки: сколько этапов выиграно (0–3 или 0–4). 
+    /// Для gold drop — null.
+    /// </summary>
     public int? Status { get; set; }
-    // 0,1,2,3,4 - выигранных этапов потасовки или турнира из четырёх (трёх)
-    // null - gold drop
+    /// <summary>
+    /// Список всех «движений казны» по этапам
+    /// </summary>
+    public ICollection<EventStage> Stages { get; set; }
+    /// <summary>
+    /// Посещаемость игроков
+    /// </summary>
     
-    public List<EventAttendance> Attendences { get; set; }
+    public List<EventAttendance> Attendances { get; set; }
 }

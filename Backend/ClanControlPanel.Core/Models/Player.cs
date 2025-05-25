@@ -10,6 +10,7 @@ public class Player
     public User User { get; set; } = null!;
     public Guid? SquadId { get; set; }
     public Squad? Squad { get; set; } = null!;
+    public int? Position { get; set; } 
     
     public List<Schedule> Schedules { get; set; } = new();
     public List<Equipment> Equipments { get; set; } = new();

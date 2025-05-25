@@ -4,7 +4,6 @@ using ClanControlPanel.Core.DTO.Response;
 using ClanControlPanel.Core.Interfaces.Services;
 using ClanControlPanel.Core.Models;
 using ClanControlPanel.Infrastructure.Data;
-using ClanControlPanel.Infrastructure.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClanControlPanel.Application.Servises;
@@ -71,7 +70,8 @@ public class SquadService(ClanControlPanelContext context) : ISquadService
             Players = s.Players.Select(p => new PlayersResponse
             {
                 Id = p.Id,
-                Name = p.Name
+                Name = p.Name,
+                Position = p.Position
             }).ToList()
         }).ToList();
     }

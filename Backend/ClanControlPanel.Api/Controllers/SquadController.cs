@@ -1,4 +1,5 @@
 using ClanControlPanel.Core.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace ClanControlPanel.Api.Controllers
     public class SquadController(ISquadService squadService) : ControllerBase
     {
         [HttpPost]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> CreateSquad([FromBody] string name)
         {
             await squadService.CreateSquad(name);
