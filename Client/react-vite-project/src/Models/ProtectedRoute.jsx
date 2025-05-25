@@ -1,12 +1,20 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import useAuth from "../Func/useAuth";
+import "../App.css";
 
 export const ProtectedRoute = ({ children, allowedRoles }) => {
   const { isAuthenticated, user, loading } = useAuth();
 
   if (loading) {
-    return <div>Загрузка...</div>;
+    return (
+      <div className="loading-container">
+        <div className="loading-content">
+          <div className="loading-spinner"></div>
+          <p className="loading-text">Загрузка...</p>
+        </div>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {

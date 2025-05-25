@@ -1,0 +1,9 @@
+.squads-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 20px;
+  padding-left: 350px;
+  padding-right: 350px;
+}

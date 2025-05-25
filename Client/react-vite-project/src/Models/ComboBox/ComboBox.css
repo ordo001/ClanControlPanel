@@ -1,0 +1,31 @@
+.comboBox {
+  padding: 8px 12px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  background-color: #3a3a3a;
+  color: #ffffff;
+  font-size: 17px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  width: 100%;
+}
+
+.comboBox:hover {
+  border-color: #747bff;
+}
+
+.comboBox:focus {
+  border-color: #747bff;
+}
+
+.option {
+  padding: 8px;
+  background-color: #3a3a3a;
+  color: #dbdbdb;
+}
+
+.option:hover {
+  background-color: #faedcd;
+  color: #5a3e2b;
+}

@@ -12,6 +12,8 @@ import EventsPage from "./Pages/EventsPage/EventsPage";
 import { ProtectedRoute } from "./Models/ProtectedRoute";
 import UsersPanelPage from "./Pages/MainPage/UsersPanelPage";
 import LoginPage from "./Pages/LoginForm/LoginPage";
+import SquadsPage from "./Pages/SquadsPage/SquadsPage";
+import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -58,10 +60,20 @@ function App() {
             path="/squads"
             element={
               <ProtectedRoute allowedRoles={["User", "Moder", "Admin"]}>
-                <PlayerPanelPage />
+                <SquadsPage />
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/player/:userId"
+            element={
+              <ProtectedRoute allowedRoles={["User", "Moder", "Admin"]}>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/events"
             element={
@@ -90,7 +102,7 @@ function App() {
             }
           />
           {/* Страница по умолчанию */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
+          <Route path="*" element={<Navigate to="/squads" replace />} />
         </Routes>
       </Router>
     </>

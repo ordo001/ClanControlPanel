@@ -1,0 +1,85 @@
+.container {
+  margin: 0 auto;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+#root {
+  margin: 0px;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 15px 0;
+}
+
+#Name {
+  float: left;
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #ac19d1;
+  cursor: pointer;
+}
+
+nav {
+  float: left;
+  margin-left: 100px;
+}
+
+.nav-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.nav-links li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 1.2em;
+  transition: background-color 0.3s;
+}
+
+.nav-links li a:hover {
+  background-color: #555;
+}
+
+.content {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.nav-button {
+  background: none;
+  cursor: pointer;
+}
+
+.form-group {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.imageCloseModal {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.error {
+  color: rgb(218, 0, 0);
+  font-size: 14px;
+  margin-top: 5px;
+}

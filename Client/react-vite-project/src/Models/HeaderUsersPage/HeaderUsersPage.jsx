@@ -1,4 +1,4 @@
-import "./HeaderMain.css";
+import "./HeaderUsersPage.css";
 import { useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
 import Button from "../Button/Button";
@@ -12,7 +12,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-export default function HeaderMain({ onUpdateListUsers }) {
+export default function HeaderUsersPage({ onUpdateListUsers }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -73,7 +73,14 @@ export default function HeaderMain({ onUpdateListUsers }) {
   return (
     <header>
       <div className="container">
-        <div id="Name">Панель управления</div>
+        <div
+          id="Name"
+          onClick={async (event) => {
+            navigate("/squads");
+          }}
+        >
+          Панель управления [SOWA]
+        </div>
         <nav>
           <ul className="nav-links">
             <li>

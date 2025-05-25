@@ -1,32 +1,43 @@
 import Button from "../Button/Button";
-import "./UserCard.css";
+import "./PlayerCard.css";
 import Modal from "../Modal/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Input from "../Input/Input";
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import { useNavigate } from "react-router-dom";
 
-export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
+export default function PlayerCard({
+  Name,
+  Id,
+  SquadName,
+  SquadId,
+  onUpdateListPlayers,
+}) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [name, setName] = useState("");
+  const [connection, setConnection] = useState(null);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const [enabledCheckBox, setEnabledCheckBox] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   async function confirmDelete() {
-    const response = await fetch(`${apiUrl}/api/Users/${Id}`, {
+    const response = await fetch(`${apiUrl}/api/Players/${Id}`, {
       method: "DELETE",
       credentials: "include",
     });
 
     if (response.ok) {
-      onUpdateListUsers();
+      onUpdateListPlayers();
     }
     setIsDeleteModalOpen(false);
   }
 
-  async function UpdateUser() {
-    const response = await fetch(`${apiUrl}/api/Users`, {
+  async function UpdatePlayer() {
+    const response = await fetch(`${apiUrl}`, {
+      // ДОДЕЛАТЬ!!!!
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +52,7 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
     });
 
     if (response.ok) {
-      onUpdateListUsers();
+      onUpdateListPlayers();
       closeModal();
     }
   }
@@ -54,6 +65,37 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
     setIsAddModalOpen(false);
   }
 
+  useEffect(() => {
+    const newConnection = new HubConnectionBuilder()
+      .withUrl(`${apiUrl}/playerHub`)
+      .withAutomaticReconnect()
+      .build();
+
+    setConnection(newConnection);
+
+    newConnection
+      .start()
+      .then(() => console.log("SignalR Connected"))
+      .catch((err) => console.error("SignalR Connection Error: ", err));
+
+    return () => {
+      newConnection.stop();
+    };
+  }, [apiUrl]);
+
+  // Обработка события обновления пользователей
+  useEffect(() => {
+    if (connection) {
+      connection.on("PlayersUpdated", onUpdateListPlayers);
+    }
+
+    return () => {
+      if (connection) {
+        connection.off("PlayersUpdated");
+      }
+    };
+  }, [connection, onUpdateListPlayers]);
+
   return (
     <>
       {isDeleteModalOpen && (
@@ -65,7 +107,7 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
             onClick={() => setIsDeleteModalOpen(false)}
           />
           <h3>Подтверждение удаления</h3>
-          <p>Вы уверены, что хотите удалить пользователя {Name}?</p>
+          <p>Вы уверены, что хотите удалить игрока {Name}?</p>
           <div style={{ display: "flex", gap: "10px" }}>
             <Button onClick={() => setIsDeleteModalOpen(false)}>Отмена</Button>
             <Button onClick={confirmDelete} style={{ background: "#ff4444" }}>
@@ -83,7 +125,7 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
             alt="Закрыть"
             onClick={closeModal}
           />
-          <h3>Изменить данные пользователя</h3>
+          <h3>Изменить данные игрока</h3>
           <p>
             Измените поля ниже <br></br>
             (Оставьте строки пустыми, если хотите оставить поля без изменений)
@@ -122,17 +164,23 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
             )}
           </div>
 
-          <Button onClick={UpdateUser}>Обновить</Button>
+          <Button onClick={UpdatePlayer}>Обновить</Button>
         </Modal>
       )}
-      <div className="Card">
+      <div className="Player-card">
         <div className="UserInfo">
-          Имя: {Name} <br />
-          Логин: {Login}
+          Ник: {Name} <br />
+          Отряд: {SquadName}
         </div>
 
         <div className="Buttons">
-          <Button onClick={() => openModal()}>Изменить</Button>
+          <Button
+            onClick={async (event) => {
+              navigate(`/player/${Id}`);
+            }}
+          >
+            Профиль
+          </Button>
           <Button onClick={() => setIsDeleteModalOpen(true)}>Удалить</Button>
         </div>
       </div>
