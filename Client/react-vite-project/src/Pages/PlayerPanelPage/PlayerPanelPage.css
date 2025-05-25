@@ -1,0 +1,14 @@
+.Info {
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+}
+
+.User-container {
+  margin-left: 250px;
+
+  margin-right: 250px;
+}
