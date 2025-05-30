@@ -4,15 +4,23 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import "./SquadsPage.css";
 import { useEffect, useState } from "react";
+import Header from "../../Models/Header/Header";
+import { useNavigate } from "react-router-dom";
+import { useLogout } from "../../Func/Logout";
+import setIsAuthenticated from "../../Func/useAuth";
 
 export default function SquadsPage() {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [squads, setSquads] = useState([]);
+  const navigate = useNavigate();
   const [draggingFromId, setDraggingFromId] = useState(null);
   const [connection, setConnection] = useState(null);
+  const logout = useLogout();
 
   const fetchSquads = () => {
-    fetch(`${apiUrl}/api/Squad`)
+    fetch(`${apiUrl}/api/Squad`, {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => {
         const filledSquads = data.map((squad) => {
@@ -114,7 +122,39 @@ export default function SquadsPage() {
 
   return (
     <>
-      <HeaderSquadsPage />
+      {/* <HeaderSquadsPage /> */}
+      <Header>
+        <li>
+          <button
+            className="nav-button"
+            onClick={async (event) => {
+              navigate("/user-panel");
+            }}
+          >
+            Аккаунты
+          </button>
+        </li>
+        <li>
+          <button
+            className="nav-button"
+            onClick={async (event) => {
+              navigate("/player-panel");
+            }}
+          >
+            Состав
+          </button>
+        </li>
+        <li>
+          <button
+            className="nav-button"
+            onClick={async (event) => {
+              navigate("/events");
+            }}
+          >
+            Казна
+          </button>
+        </li>
+      </Header>
       <div className="squads-container">
         <DragDropContext
           onDragEnd={handleDragEnd}

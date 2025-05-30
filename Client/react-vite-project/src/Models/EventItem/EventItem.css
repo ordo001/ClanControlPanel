@@ -1,0 +1,29 @@
+.Event-card {
+  background-color: rgb(53, 53, 53);
+  padding: 16px;
+  margin: 10px;
+  margin-top: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.Event-card:hover {
+  background-color: rgb(60, 60, 60);
+}
+
+.Event-main-info {
+  font-size: "18px";
+  font-weight: "600";
+  width: "100%";
+  display: "flex";
+  justify-content: "space-between";
+  gap: "10px";
+  flex-wrap: "wrap";
+}
+
+.Event-param {
+  font-size: 20px;
+}

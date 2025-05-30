@@ -14,6 +14,7 @@ import UsersPanelPage from "./Pages/MainPage/UsersPanelPage";
 import LoginPage from "./Pages/LoginForm/LoginPage";
 import SquadsPage from "./Pages/SquadsPage/SquadsPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
+import { UnauthorizePage } from "./Pages/UnauthorizedPage/UnauthorizedPage";
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -59,7 +60,7 @@ function App() {
           <Route
             path="/squads"
             element={
-              <ProtectedRoute allowedRoles={["User", "Moder", "Admin"]}>
+              <ProtectedRoute allowedRoles={["Member", "Moder", "Admin"]}>
                 <SquadsPage />
               </ProtectedRoute>
             }
@@ -68,7 +69,9 @@ function App() {
           <Route
             path="/player/:userId"
             element={
-              <ProtectedRoute allowedRoles={["User", "Moder", "Admin"]}>
+              <ProtectedRoute
+                allowedRoles={["User", "Member", "Moder", "Admin"]}
+              >
                 <ProfilePage />
               </ProtectedRoute>
             }
@@ -77,7 +80,7 @@ function App() {
           <Route
             path="/events"
             element={
-              <ProtectedRoute allowedRoles={["User", "Moder", "Admin"]}>
+              <ProtectedRoute allowedRoles={["Member", "Moder", "Admin"]}>
                 <EventsPage />
               </ProtectedRoute>
             }
@@ -103,6 +106,9 @@ function App() {
           />
           {/* Страница по умолчанию */}
           <Route path="*" element={<Navigate to="/squads" replace />} />
+
+          {/* Страница для не авторизованный чувачков*/}
+          <Route path="/unauthorized" element={<UnauthorizePage />} />
         </Routes>
       </Router>
     </>

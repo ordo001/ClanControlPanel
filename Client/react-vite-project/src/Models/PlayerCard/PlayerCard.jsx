@@ -181,7 +181,7 @@ export default function PlayerCard({
           >
             Профиль
           </Button>
-          <Button onClick={() => setIsDeleteModalOpen(true)}>Удалить</Button>
+          <Button onClick={() => setIsDeleteModalOpen(true)}>Кикнуть</Button>
         </div>
       </div>
     </>

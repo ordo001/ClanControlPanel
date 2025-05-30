@@ -64,7 +64,6 @@ export default function HeaderUsersPage({ onUpdateListUsers }) {
         onUpdateListUsers();
         setIsAddModalOpen(false);
       }
-      //console.log(response.body);
     } catch (error) {
       console.log("Нет связи с сервером.", error);
     }

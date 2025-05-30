@@ -44,6 +44,23 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
       onUpdateListUsers();
       closeModal();
     }
+    if (response.status >= 400) {
+      const errorData = await response.json();
+      if (Array.isArray(errorData)) {
+        const messages = errorData.map(
+          (err) => err.errorMessage || "Неизвестная ошибка"
+        );
+        alert(`Ошибки:\n- ${messages.join("\n- ")}`);
+      }
+      // Если это объект с Message
+      else if (errorData?.Message) {
+        alert(`Ошибка: ${errorData.Message}`);
+      }
+      // Что-то ещё
+      else {
+        alert("Произошла неизвестная ошибка.");
+      }
+    }
   }
 
   function openModal() {
@@ -127,8 +144,8 @@ export default function UserCard({ Name, Login, Id, onUpdateListUsers }) {
       )}
       <div className="Card">
         <div className="UserInfo">
-          Имя: {Name} <br />
-          Логин: {Login}
+          Логин: {Login} <br />
+          Имя: {Name}
         </div>
 
         <div className="Buttons">
