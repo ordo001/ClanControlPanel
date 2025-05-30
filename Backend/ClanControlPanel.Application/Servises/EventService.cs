@@ -9,10 +9,29 @@ namespace ClanControlPanel.Core.Interfaces.Services;
 
 public class EventService(ClanControlPanelContext context, IPlayerService playerService) : IEventService
 {
-    public async Task<List<Event>> GetEvents()
+    public async Task<List<EventResponse>> GetEvents()
     {
-        var events = await context.Events.ToListAsync();
-        return events;
+        var events = await context.Events
+            .AsNoTracking()
+            .Include(e => e.Stages)
+            .Include(e => e.EventType)
+            .ToListAsync();
+        return events.Select(e => new EventResponse
+        {
+            IdEvent = e.Id,
+            Date = e.Date,
+            Status = e.Status,
+            EventTypeName = e.EventType.NameEventType,
+            Stages = e.Stages.Select(s => new StageResponse
+            {
+                IdEventStage = s.Id,
+                StageNumber = s.StageNumber,
+                Amount = s.Amount,
+                Description = s.Description
+            }).ToList()
+        })
+        .OrderByDescending(e => e.Date)
+            .ToList();
     }
 
     public async Task<Event> GetEventById(Guid eventId)

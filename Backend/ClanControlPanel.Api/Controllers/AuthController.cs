@@ -20,7 +20,7 @@ namespace ClanControlPanel.Api.Controllers
             var token = await userServices.Login(authRequest.Login, authRequest.Password);
             if (token is null)
             {
-                return NotFound();
+                return Unauthorized();
             }
 
             /*Response.Cookies.Append("JwtMonster",token);*/

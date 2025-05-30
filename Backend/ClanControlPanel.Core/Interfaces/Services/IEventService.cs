@@ -5,7 +5,7 @@ namespace ClanControlPanel.Core.Interfaces.Services;
 
 public interface IEventService
 {
-    public Task<List<Event>> GetEvents();
+    public Task<List<EventResponse>> GetEvents();
     public Task<Event> GetEventById(Guid eventId);
     public Task AddEvent(DateTime date, Guid eventTypeId, int? wonStagesCount = null); //TODO: хуй знает что лучше eventTypeId или передать string название этапа. Проверить с клиентом
     public Task RemoveEvent(Guid eventId);

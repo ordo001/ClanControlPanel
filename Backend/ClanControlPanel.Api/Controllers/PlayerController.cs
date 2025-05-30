@@ -13,7 +13,7 @@ namespace ClanControlPanel.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Moder, Admin")]
+    [Authorize(Roles = "Member, Moder, Admin")]
     public class PlayerController(IPlayerService playerService, IHubContext<PlayerHub> hubContext) : ControllerBase
     {
         [HttpGet]
@@ -31,6 +31,7 @@ namespace ClanControlPanel.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> AddPlayer([FromBody] PlayerAddRequest playerAddRequest)
         {
             await playerService.AddPlayer(playerAddRequest.Name, playerAddRequest.SquadId);
@@ -50,6 +51,7 @@ namespace ClanControlPanel.Api.Controllers
         }
 
         [HttpDelete("/api/Players/{playerId}")]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> DeletePlayer(Guid playerId)
         {
             await playerService.RemovePlayerById(playerId);

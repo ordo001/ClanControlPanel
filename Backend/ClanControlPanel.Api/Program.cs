@@ -17,11 +17,21 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         
-        builder.WebHost.ConfigureKestrel(serverOptions =>
+        /*builder.WebHost.ConfigureKestrel(serverOptions =>
         {
             serverOptions.ListenAnyIP(5220); 
+        });*/
+        //builder.WebHost.UseUrls("http://0.0.0.0:5220");
+        
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
         });
-        builder.WebHost.UseUrls("http://0.0.0.0:5220");
 
         builder.Services.AddControllers().AddJsonOptions(
             option => option.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -70,13 +80,16 @@ public class Program
         /*app.UseHttpsRedirection();*/
         app.UseForwardedHeaders();
 
-        app.UseCors(x =>
+        /*app.UseCors(x =>
         {
             x.WithOrigins("http://localhost:5173")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
-        });
+        });*/
+        app.Urls.Add("http://*:80");
+        app.UseCors("AllowAll");
+        
         app.UseAuthorization();
         
         app.MapControllers();

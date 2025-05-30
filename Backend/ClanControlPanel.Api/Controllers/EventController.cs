@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ClanControlPanel.Api.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Member, Moder, Admin")]
     [ApiController]
     public class EventController(IEventService eventService) : ControllerBase
     {
@@ -27,6 +28,7 @@ namespace ClanControlPanel.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> AddEvent([FromBody] EventAddRequest eventAddRequest)
         {
             await eventService.AddEvent(eventAddRequest.Date, eventAddRequest.EventTypeId, eventAddRequest.Status);
@@ -55,6 +57,7 @@ namespace ClanControlPanel.Api.Controllers
         }
 
         [HttpPost("{eventId:guid}/attendances/{playerId:guid}")]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> SetAttendance(Guid eventId, Guid playerId,
             [FromBody] AttendanceUpdateRequest dto)
         {
@@ -63,6 +66,7 @@ namespace ClanControlPanel.Api.Controllers
         }
 
         [HttpPost("{eventId:guid}/attendances/players/present")]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> MarkPlayersPresent(Guid eventId, [FromBody] PlayerListRequest dto)
         {
             await eventService.MarkPlayersPresent(eventId, dto.PlayerIds);
@@ -70,6 +74,7 @@ namespace ClanControlPanel.Api.Controllers
         }
 
         [HttpDelete("{eventId:guid}/attendances/{playerId:guid}")]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> RemoveAttendance(Guid eventId, Guid playerId)
         {
             await eventService.RemoveAttendance(eventId, playerId);
@@ -84,6 +89,7 @@ namespace ClanControlPanel.Api.Controllers
         }
 
         [HttpPost("{eventId:guid}/stages")]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> AddStage(Guid eventId, [FromBody] EventStageAddRequest dto)
         {
             await eventService.AddEventStage(eventId, dto.StageNumber, dto.Amount, dto.Description);
@@ -91,6 +97,7 @@ namespace ClanControlPanel.Api.Controllers
         }
 
         [HttpPut("stages/{stageId:guid}")]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> UpdateStage(Guid stageId, [FromBody] EventStageUpdateRequest dto)
         {
             await eventService.UpdateEventStage(stageId, dto.Amount, dto.Description);
@@ -98,6 +105,7 @@ namespace ClanControlPanel.Api.Controllers
         }
 
         [HttpDelete("stages/{stageId:guid}")]
+        [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> DeleteStage(Guid stageId)
         {
             await eventService.RemoveEventStage(stageId);

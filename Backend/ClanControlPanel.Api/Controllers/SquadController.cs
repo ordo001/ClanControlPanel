@@ -7,6 +7,7 @@ namespace ClanControlPanel.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Member, Moder, Admin")]
     public class SquadController(ISquadService squadService) : ControllerBase
     {
         [HttpPost]

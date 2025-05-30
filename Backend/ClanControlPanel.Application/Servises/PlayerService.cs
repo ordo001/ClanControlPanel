@@ -24,6 +24,8 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         {
             throw new EntityNotFoundException<User>(name);
         }
+
+        user.Role = Role.Member;
         
         var maxPosition = await context.Players
             .Where(p => p.SquadId == squadId)
@@ -38,6 +40,7 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
         };
         
         await context.Players.AddAsync(player);
+        context.Users.Update(user);
         await context.SaveChangesAsync();
     }
 
@@ -65,12 +68,21 @@ public class PlayerService(IUserServices userService, ClanControlPanelContext co
 
     public async Task RemovePlayerById(Guid id)
     {
-        var player = await context.Players.FirstOrDefaultAsync(p => p.Id == id);
+        var player = await context.Players
+            .FirstOrDefaultAsync(p => p.Id == id);
         if (player is null)
         {
             throw new EntityNotFoundException<Player>(id);
         }
 
+        var user = await context.Users.SingleOrDefaultAsync(u => u.Id == player.UserId);
+        if (user is null)
+        {
+            throw new EntityNotFoundException<User>(player.UserId);
+        }
+
+        user.Role = Role.User;
+        context.Users.Update(user);
         context.Players.Remove(player);
         await context.SaveChangesAsync();
     }

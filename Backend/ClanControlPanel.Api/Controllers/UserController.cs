@@ -1,4 +1,5 @@
-﻿using ClanControlPanel.Api.Hubs;
+﻿using System.ComponentModel.DataAnnotations;
+using ClanControlPanel.Api.Hubs;
 using ClanControlPanel.Application.Exceptions;
 using ClanControlPanel.Core.DTO;
 using ClanControlPanel.Core.Interfaces.Services;
@@ -54,6 +55,26 @@ namespace ClanControlPanel.Api.Controllers
         [HttpPatch("/api/Users")]
         public async Task<IActionResult> Update([FromBody] UpdateUserRequest updateUserRequest)
         {
+            var validationResult = validator.ValidationEntity(updateUserRequest);
+
+            // Добавляем ручную валидацию логина
+            if (!string.IsNullOrWhiteSpace(updateUserRequest.Login) && updateUserRequest.Login.Length < 2)
+            {
+                validationResult.Add(new ValidationResult("Минимальная длина логина — 2 символа", new[] { "Login" }));
+            }
+
+            // Добавляем ручную валидацию пароля
+            if (!string.IsNullOrWhiteSpace(updateUserRequest.Password) && updateUserRequest.Password.Length < 2)
+            {
+                validationResult.Add(new ValidationResult("Минимальная длина пароля — 2 символа", new[] { "Password" }));
+            }
+
+            if (validationResult.Any())
+            {
+                return BadRequest(validationResult);
+            }
+            
+            
             await userServise.UpdateUser(updateUserRequest.Id, updateUserRequest.Name, updateUserRequest.Login,
                 updateUserRequest.Password);
             await hubContext.Clients.All.SendAsync("UsersUpdated");
