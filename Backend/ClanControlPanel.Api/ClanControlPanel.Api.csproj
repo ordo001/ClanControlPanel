@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -24,6 +25,12 @@
       <ProjectReference Include="..\ClanControlPanel.Application\ClanControlPanel.Application.csproj" />
       <ProjectReference Include="..\ClanControlPanel.Core\ClanControlPanel.Core.csproj" />
       <ProjectReference Include="..\ClanControlPanel.Infrastructure\ClanControlPanel.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
