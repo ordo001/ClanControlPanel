@@ -2,72 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventItem from "../../Models/EventItem/EventItem";
 import Header from "../../Models/Header/Header";
+import NewEventModal from "../../Models/NewEventModal/NewEventModal";
 import { useNavigate } from "react-router-dom";
-
-// export default function EventsPage() {
-//   const [events, setEvents] = useState([]);
-//   const [expandedEventId, setExpandedEventId] = useState(null);
-//   const apiUrl = import.meta.env.VITE_API_URL;
-
-//   useEffect(() => {
-//     fetchEvents();
-//   }, []);
-
-//   const fetchEvents = async () => {
-//     try {
-//       const res = await axios.get(`${apiUrl}/api/Event`, {
-//         withCredentials: true,
-//       });
-//       console.log("Ответ от API /api/Event:", res.data);
-//       setEvents(Array.isArray(res.data) ? res.data : []);
-//     } catch (error) {
-//       console.error("Ошибка при загрузке событий:", error);
-//       setEvents([]);
-//     }
-//   };
-
-//   const toggleExpanded = (eventId) => {
-//     setExpandedEventId(expandedEventId === eventId ? null : eventId);
-//   };
-
-//   const fetchStages = async (eventId) => {
-//     try {
-//       const res = await axios.get(`${apiUrl}/api/Event/${eventId}/stages`, {
-//         withCredentials: true,
-//       });
-//       return res.data;
-//     } catch (error) {
-//       console.error("Ошибка при загрузке этапов:", error);
-//       return [];
-//     }
-//   };
-
-//   const getTotalAmount = (stages) => {
-//     return stages.reduce((sum, stage) => sum + stage.amount, 0);
-//   };
-
-//   return (
-//     <>
-//       <Header />
-//       <div>
-//         <h2>Список событий</h2>
-//         {events.map((event) => (
-//           <EventItem
-//             key={event.idEvent}
-//             event={event}
-//             expanded={expandedEventId === event.idEvent}
-//             onToggle={toggleExpanded}
-//             fetchStages={fetchStages}
-//             getTotalAmount={getTotalAmount}
-//           />
-//         ))}
-//       </div>
-//     </>
-//   );
-// }
 
 export default function EventsPage() {
   const [events, setEvents] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [stagesMap, setStagesMap] = useState({});
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -118,6 +58,11 @@ export default function EventsPage() {
 
   return (
     <div>
+      <NewEventModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={fetchEvents}
+      />
       <Header>
         <li>
           <button
@@ -141,7 +86,9 @@ export default function EventsPage() {
       </div>
 
       <div className="User-container">
-        <div className="Add-user">+ Новое событие</div>
+        <div className="Add-user" onClick={() => setIsModalOpen(true)}>
+          + Новое событие
+        </div>
 
         {events.length > 0 ? (
           events.map((event) => (
