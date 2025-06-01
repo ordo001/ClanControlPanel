@@ -4,6 +4,7 @@ using ClanControlPanel.Api.Middleware;
 using ClanControlPanel.Application.Servises;
 using ClanControlPanel.Application.Settings;
 using ClanControlPanel.Core.Interfaces.Services;
+using ClanControlPanel.Core.Models;
 using ClanControlPanel.Infrastructure.Data;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -22,6 +23,9 @@ public class Program
             serverOptions.ListenAnyIP(5220); 
         });*/
         //builder.WebHost.UseUrls("http://0.0.0.0:5220");
+        
+        builder.WebHost.UseUrls("http://*:8080");
+
         
         builder.Services.AddCors(options =>
         {
@@ -77,18 +81,29 @@ public class Program
             
         }
 
+        if (app.Environment.IsProduction())
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<ClanControlPanelContext>();
+                db.Database.Migrate();
+                /*db.Users.Add(new User{Id = Guid.NewGuid(), Name = "Admin", Login = "Admin", PasswordHash = "123", Role = Role.Admin});
+                db.SaveChanges();*/
+            }
+        }
+
         /*app.UseHttpsRedirection();*/
         app.UseForwardedHeaders();
 
-        /*app.UseCors(x =>
+        app.UseCors(x =>
         {
-            x.WithOrigins("http://localhost:5173")
+            x.WithOrigins("http://localhost:80", "http://localhost", "http://localhost:5173")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();
-        });*/
-        app.Urls.Add("http://*:80");
-        app.UseCors("AllowAll");
+        });
+        //app.Urls.Add("http://*:80");
+        //app.UseCors("AllowAll");
         
         app.UseAuthorization();
         

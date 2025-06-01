@@ -20,6 +20,13 @@ namespace ClanControlPanel.Api.Controllers
             return Ok(events);
         }
 
+        [HttpGet("/api/Event/Types")]
+        public async Task<IActionResult> GetEventTypes()
+        {
+            var eventTypes = await eventService.GetEventTypes();
+            return Ok(eventTypes);
+        }
+
         [HttpGet("{eventId:guid}")]
         public async Task<IActionResult> GetEventById(Guid eventId)
         {
@@ -31,8 +38,8 @@ namespace ClanControlPanel.Api.Controllers
         [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> AddEvent([FromBody] EventAddRequest eventAddRequest)
         {
-            await eventService.AddEvent(eventAddRequest.Date, eventAddRequest.EventTypeId, eventAddRequest.Status);
-            return Ok();
+            var eventId = await eventService.AddEvent(eventAddRequest.Date, eventAddRequest.EventTypeId, eventAddRequest.Status);
+            return Ok(eventId);
         }
 
         [HttpDelete("{eventId:guid}")]

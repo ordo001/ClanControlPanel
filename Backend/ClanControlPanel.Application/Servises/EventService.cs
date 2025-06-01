@@ -34,6 +34,19 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
             .ToList();
     }
 
+    public async Task<List<EventTypesResponse>> GetEventTypes()
+    {
+        var eventTypes = await context.EventTypes
+            .AsNoTracking()
+            .ToListAsync();
+        
+        return eventTypes.Select(e => new EventTypesResponse
+        {
+            Id = e.Id,
+            EventTypeName = e.NameEventType
+        }).ToList();
+    }
+
     public async Task<Event> GetEventById(Guid eventId)
     {
         var eventEntity = await context.Events.FirstOrDefaultAsync(p => p.Id == eventId);
@@ -43,7 +56,7 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
         return eventEntity;
     }
 
-    public async Task AddEvent(DateTime date, Guid eventTypeId, int? status)
+    public async Task<Guid> AddEvent(DateTime date, Guid eventTypeId, int? status)
     {
         var eventEntity = new Event
         {
@@ -53,6 +66,7 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
         };
         await context.Events.AddAsync(eventEntity);
         await context.SaveChangesAsync();
+        return eventEntity.Id;
     }
 
     public async Task RemoveEvent(Guid eventId)
@@ -242,7 +256,7 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
             .ToListAsync();
     }
 
-    public async Task AddEventStage(Guid eventId, int stageNumber, int amount, string? description = null)
+    public async Task AddEventStage(Guid eventId, int? stageNumber, int amount, string? description = null)
     {
         var ev = await context.Events.FindAsync(eventId)
                  ?? throw new EntityNotFoundException<Event>(eventId);
