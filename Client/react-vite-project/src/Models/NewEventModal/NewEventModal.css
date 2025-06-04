@@ -45,37 +45,67 @@
   margin-left: 10px;
 }
 
-/* .result-input {
-  margin-left: 10px;
-  width: 60px;
-} */
 .result-input {
   width: 60px !important;
   flex-grow: 0 !important;
 }
 
-.stages-wrapper {
-  max-height: 300px;
-  overflow-y: auto;
-  padding-right: 8px;
-  border: 1px solid #555;
-  border-radius: 8px;
+.font-size {
+  font-size: 18px;
 }
 
-.empty-stages-message {
+.credit-info {
+  padding-bottom: 10px;
+}
+
+/* .stages-wrapper {
+  overflow: hidden;
+  padding: 12px;
+  margin-top: 10px;
+  border: 1px solid #555;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+} */
+
+.stages-wrapper {
+  overflow: hidden;
+  padding: 12px;
+  border: 1px solid #555;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+}
+
+/* .empty-stages-message {
   color: #aaa;
   padding: 10px;
   height: 50px;
   width: 450px;
+} */
+
+.empty-stages-message {
+  color: #aaa;
+  padding: 10px;
+  text-align: center;
 }
 
-.stage-card {
+/* .stage-card {
   padding: 10px;
   margin: 25px;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+} */
+
+.stage-card {
+  background-color: #333;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s ease;
 }
 
 .stage-card label {
@@ -108,4 +138,9 @@
 .actions-wrapper {
   margin-top: 20px;
   text-align: right;
+}
+
+.stages-outer-wrapper {
+  position: relative;
+  overflow: hidden;
 }

@@ -23,10 +23,25 @@ export default function SquadsPage() {
     })
       .then((res) => res.json())
       .then((data) => {
+        // const filledSquads = data.map((squad) => {
+        //   const sortedPlayers = squad.players
+        //     .filter((p) => p !== null)
+        //     .sort((a, b) => a.position - b.position);
+
+        //   return {
+        //     ...squad,
+        //     players: sortedPlayers,
+        //   };
+        // });
         const filledSquads = data.map((squad) => {
           const sortedPlayers = squad.players
             .filter((p) => p !== null)
             .sort((a, b) => a.position - b.position);
+
+          // Добавим null-слоты до 5 игроков
+          while (sortedPlayers.length < 5) {
+            sortedPlayers.push(null);
+          }
 
           return {
             ...squad,

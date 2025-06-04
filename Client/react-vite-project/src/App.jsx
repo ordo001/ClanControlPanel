@@ -15,6 +15,7 @@ import LoginPage from "./Pages/LoginForm/LoginPage";
 import SquadsPage from "./Pages/SquadsPage/SquadsPage";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
 import { UnauthorizePage } from "./Pages/UnauthorizedPage/UnauthorizedPage";
+import AttendancesPage from "./Pages/AttendancesPage/AttendancesPage";
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -85,6 +86,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/events/:eventId/attendances"
+            element={
+              <ProtectedRoute allowedRoles={["Member", "Moder", "Admin"]}>
+                <AttendancesPage />
+              </ProtectedRoute>
+            }
+          />
+
           {/* Модераторы и выше */}
           <Route
             path="/player-panel"

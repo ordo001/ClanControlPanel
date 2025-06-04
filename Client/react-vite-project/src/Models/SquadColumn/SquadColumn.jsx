@@ -26,10 +26,10 @@ export default function SquadColumn({ squad, isFull, isDropDisabled }) {
             {slots.map((player, index) =>
               player ? (
                 <PlayerCardSquad
-                  key={player.id}
+                  key={player.id || `empty-${index}`}
                   player={player}
                   index={index}
-                  isFirst={index === 0} // передаем флаг для первого игрока
+                  isFirst={index === 0 && player} // передаем флаг для первого игрока
                 />
               ) : (
                 <div key={`empty-${index}`} className="empty-slot">

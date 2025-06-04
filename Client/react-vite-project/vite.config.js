@@ -9,7 +9,7 @@ export default defineConfig({
   //   outDir: "dist",
   // },
   // server: {
-  //   allowedHosts: ["packard-trout-experimental-behalf.trycloudflare.com"],
+  //   allowedHosts: ["flogritunnel.com"],
   // },
   // server: {
   //   host: true,

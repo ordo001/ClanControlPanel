@@ -6,9 +6,11 @@ export default function NewEventModalWrapper({ children, open }) {
   return createPortal(
     <dialog
       open={open}
-      style={{
-        width: "1100px",
-      }}
+      style={
+        {
+          // width: "1100px",
+        }
+      }
     >
       {children}
     </dialog>,

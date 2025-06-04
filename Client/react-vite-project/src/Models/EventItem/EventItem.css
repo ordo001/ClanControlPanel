@@ -15,13 +15,15 @@
 }
 
 .Event-main-info {
-  font-size: "18px";
-  font-weight: "600";
-  width: "100%";
-  display: "flex";
-  justify-content: "space-between";
-  gap: "10px";
-  flex-wrap: "wrap";
+  font-size: 18px;
+  font-weight: 600;
+  width: 100%;
+  align-items: center;
+  display: flex;
+
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .Event-param {
