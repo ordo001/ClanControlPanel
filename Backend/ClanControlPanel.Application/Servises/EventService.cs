@@ -17,20 +17,20 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
             .Include(e => e.EventType)
             .ToListAsync();
         return events.Select(e => new EventResponse
-        {
-            IdEvent = e.Id,
-            Date = e.Date,
-            Status = e.Status,
-            EventTypeName = e.EventType.NameEventType,
-            Stages = e.Stages.Select(s => new StageResponse
             {
-                IdEventStage = s.Id,
-                StageNumber = s.StageNumber,
-                Amount = s.Amount,
-                Description = s.Description
-            }).ToList()
-        })
-        .OrderByDescending(e => e.Date)
+                IdEvent = e.Id,
+                Date = e.Date,
+                Status = e.Status,
+                EventTypeName = e.EventType.NameEventType,
+                Stages = e.Stages.Select(s => new StageResponse
+                {
+                    IdEventStage = s.Id,
+                    StageNumber = s.StageNumber,
+                    Amount = s.Amount,
+                    Description = s.Description
+                }).ToList()
+            })
+            .OrderByDescending(e => e.Date)
             .ToList();
     }
 
@@ -39,7 +39,7 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
         var eventTypes = await context.EventTypes
             .AsNoTracking()
             .ToListAsync();
-        
+
         return eventTypes.Select(e => new EventTypesResponse
         {
             Id = e.Id,
@@ -49,7 +49,9 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
 
     public async Task<Event> GetEventById(Guid eventId)
     {
-        var eventEntity = await context.Events.FirstOrDefaultAsync(p => p.Id == eventId);
+        var eventEntity = await context.Events
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.Id == eventId);
         if (eventEntity is null)
             throw new EntityNotFoundException<Event>(eventId);
 
@@ -65,6 +67,17 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
             Status = status
         };
         await context.Events.AddAsync(eventEntity);
+
+        var players = await context.Players.ToListAsync();
+
+        await context.EventAttendances.AddRangeAsync(players.Select(p => new EventAttendance
+        {
+            EventId = eventEntity.Id,
+            PlayerId = p.Id,
+            Status = AttendanceStatus.AbsentUnexcused,
+            AbsenceReason = null
+        }));
+
         await context.SaveChangesAsync();
         return eventEntity.Id;
     }
@@ -87,18 +100,28 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
         AttendanceStatus status,
         string? absenceReason = null)
     {
-        var ev = await context.Events.FindAsync(eventId);
-        if (ev == null) 
+        var ev = await context.Events
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == eventId);
+        if (ev == null)
             throw new EntityNotFoundException<Event>(eventId);
 
-        var player = await playerService.GetPlayerById(playerId);
-        if (player == null)
+        var player = await context.Players
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == playerId);
+        if (player is null)
             throw new EntityNotFoundException<Player>(playerId);
 
         var attendance = await context.EventAttendances
             .SingleOrDefaultAsync(a => a.EventId == eventId && a.PlayerId == playerId);
 
-        if (attendance == null)
+        var aboba = await context.EventAttendances
+            .Where(a => a.EventId == eventId && a.PlayerId == playerId)
+            .ExecuteUpdateAsync(a => a
+                .SetProperty(a => a.Status, status)
+                .SetProperty(b => b.AbsenceReason, absenceReason));
+
+        /*if (attendance == null)
         {
             attendance = new EventAttendance
             {
@@ -106,13 +129,46 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
                 PlayerId = playerId
             };
             context.EventAttendances.Add(attendance);
+        }*/
+
+        if (aboba == 0)
+        {
+            attendance = new EventAttendance
+            {
+                EventId = eventId,
+                PlayerId = playerId,
+                Status = status
+            };
+            context.EventAttendances.Add(attendance);
         }
 
-        attendance.Status = status;
+        /*attendance.Status = status;
         attendance.AbsenceReason = (status == AttendanceStatus.AbsentUnexcused || status == AttendanceStatus.AbsentExcused)
             ? absenceReason
-            : null;
+            : null;*/
 
+        await context.SaveChangesAsync();
+    }
+
+    public async Task UpdateAttendance(Guid eventId, Guid playerId, AttendanceStatus status)
+    {
+        var ev = await context.Events
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == eventId);
+        if (ev == null)
+            throw new EntityNotFoundException<Event>(eventId);
+
+        var player = await context.Players
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == playerId);
+        if (player is null)
+            throw new EntityNotFoundException<Player>(playerId);
+
+        var attendance = await context.EventAttendances
+            .SingleOrDefaultAsync(a => a.EventId == eventId && a.PlayerId == playerId);
+
+        attendance!.Status = status;
+        context.EventAttendances.Update(attendance);
         await context.SaveChangesAsync();
     }
 
@@ -155,16 +211,19 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
     /// </summary>
     public async Task MarkPlayersPresent(Guid eventId, IEnumerable<Guid> playerIds)
     {
-        var ev = await context.Events.FindAsync(eventId);
-        if (ev == null) 
+        var ev = await context.Events
+            .AsNoTracking()
+            .FirstAsync(e => e.Id == eventId);
+        if (ev == null)
             throw new EntityNotFoundException<Event>(eventId);
 
         var attendances = new List<EventAttendance>();
 
+        var playerList = await context.Players.AsNoTracking().ToListAsync();
+
         foreach (var playerId in playerIds)
         {
-            var player = await playerService.GetPlayerById(playerId);
-            if (player == null)
+            if (playerList.FirstOrDefault(p => p.Id == playerId) is null)
                 throw new EntityNotFoundException<Player>(playerId);
 
             var att = await context.EventAttendances
@@ -203,54 +262,82 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
         context.EventAttendances.Remove(att);
         await context.SaveChangesAsync();
     }
-    
-    public async Task<List<AttendanceDto>> GetPlayerAttendance(Guid playerId)
+
+    public async Task<List<EventAttendanceResponse>> GetPlayerAttendance(Guid playerId)
     {
         // проверяем наличие игрока
-        await playerService.GetPlayerById(playerId);
+        var player = await context.Players
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == playerId);
+        if (player is null)
+            throw new EntityNotFoundException<Player>(playerId);
 
-        return await context.EventAttendances
+        return new List<EventAttendanceResponse>();
+
+        /*return await context.EventAttendances
             .Where(a => a.PlayerId == playerId)
             .Include(a => a.Event).ThenInclude(e => e.EventType)
-            .Select(a => new AttendanceDto
+            .Select(a => new EventAttendanceResponse
             {
-                Id             = a.Id,
-                EventId        = a.EventId,
-                EventName      = a.Event.EventType.NameEventType,
-                PlayerId       = a.PlayerId,
-                PlayerName     = a.Event.Attendances.FirstOrDefault(x => x.PlayerId == playerId)!.Player.Name,
-                Attendance     = a.Status,
-                AbsenceReason  = a.AbsenceReason
+                AttendanceId = a.Id,
+                Date = a.Event.Date,
+                Attendances = new List<AttendanceResponse>
+                {
+                    new AttendanceResponse()
+                    {
+                        EventId = a.EventId,
+                        EventName = a.Event.EventType.NameEventType,
+                        PlayerId = a.PlayerId,
+                        PlayerName = a.Player.Name,
+                        Attendance = a.Status,
+                        AbsenceReason = a.AbsenceReason
+                    }
+                }
             })
-            .ToListAsync();
+            .ToListAsync();*/
     }
-    
-    
-    public async Task<List<AttendanceDto>> GetEventAttendance(Guid eventId)
-    {
-        var ev = await GetEventById(eventId);
 
-        return await context.EventAttendances
-            .Where(a => a.EventId == eventId)
+
+    public async Task<EventAttendanceResponse> GetEventAttendance(Guid eventId)
+    {
+        var eventEntity = await context.Events
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == eventId);
+        if (eventEntity is null)
+            throw new EntityNotFoundException<Event>(eventId);
+
+        var attendance = await context.EventAttendances
+            .AsNoTracking()
             .Include(a => a.Player)
+                .ThenInclude(p => p.Squad)
             .Include(a => a.Event)
                 .ThenInclude(e => e.EventType)
-            .Select(a => new AttendanceDto
-            {
-                Id             = a.Id,
-                EventId        = a.EventId,
-                EventName     = a.Event.EventType.NameEventType,
-                PlayerId       = a.PlayerId,
-                PlayerName     = a.Player.Name,
-                Attendance     = a.Status,
-                AbsenceReason  = a.AbsenceReason
-            })
+            .Where(a => a.EventId == eventId)
             .ToListAsync();
+        
+
+        var eventAttendanceResponse = new EventAttendanceResponse()
+        {
+            EventId = attendance[0].EventId,
+            EventTypeName = attendance[0].Event.EventType.NameEventType,
+            Date = attendance[0].Event.Date,
+            Attendances = attendance.Select(a => new AttendanceResponse
+            {
+                AttendanceId = a.Id,
+                PlayerId = a.PlayerId,
+                PlayerName = a.Player.Name,
+                SquadName = a.Player.Squad!.NameSquad,
+                Attendance = a.Status,
+                AbsenceReason = a.AbsenceReason
+            }).ToList()
+        };
+        return eventAttendanceResponse;
     }
-    
+
     public async Task<List<EventStage>> GetEventStages(Guid eventId)
     {
         return await context.EventStages
+            .AsNoTracking()
             .Where(s => s.EventId == eventId)
             .OrderBy(s => s.StageNumber)
             .ToListAsync();
@@ -258,7 +345,9 @@ public class EventService(ClanControlPanelContext context, IPlayerService player
 
     public async Task AddEventStage(Guid eventId, int? stageNumber, int amount, string? description = null)
     {
-        var ev = await context.Events.FindAsync(eventId)
+        var ev = await context.Events
+                     .AsNoTracking()
+                     .FirstAsync(e => e.Id == eventId)
                  ?? throw new EntityNotFoundException<Event>(eventId);
 
         var stage = new EventStage

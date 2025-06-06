@@ -18,13 +18,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         
-        /*builder.WebHost.ConfigureKestrel(serverOptions =>
-        {
-            serverOptions.ListenAnyIP(5220); 
-        });*/
-        //builder.WebHost.UseUrls("http://0.0.0.0:5220");
-        
-        builder.WebHost.UseUrls("http://*:8080");
+        //builder.WebHost.UseUrls("http://*:8080");
 
         
         builder.Services.AddCors(options =>
@@ -64,7 +58,7 @@ public class Program
             options.KnownNetworks.Clear();
             options.KnownProxies.Clear();
         });
-
+        
         builder.Services.AddSignalR();
         
         var app = builder.Build();
@@ -73,6 +67,7 @@ public class Program
 
         app.MapHub<UserHub>("/userHub");
         app.MapHub<PlayerHub>("/playerHub");
+        app.MapHub<EventHub>("/eventHub");
         
         if (app.Environment.IsDevelopment())
         {
@@ -102,8 +97,6 @@ public class Program
                 .AllowAnyMethod()
                 .AllowCredentials();
         });
-        //app.Urls.Add("http://*:80");
-        //app.UseCors("AllowAll");
         
         app.UseAuthorization();
         

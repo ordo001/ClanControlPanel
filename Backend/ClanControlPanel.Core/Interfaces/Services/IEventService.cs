@@ -10,9 +10,10 @@ public interface IEventService
     public Task<Event> GetEventById(Guid eventId);
     public Task<Guid> AddEvent(DateTime date, Guid eventTypeId, int? wonStagesCount = null); //TODO: хуй знает что лучше eventTypeId или передать string название этапа. Проверить с клиентом
     public Task RemoveEvent(Guid eventId);
-    public Task<List<AttendanceDto>> GetPlayerAttendance(Guid playerId);
-    public Task<List<AttendanceDto>> GetEventAttendance(Guid eventId);
+    public Task<List<EventAttendanceResponse>> GetPlayerAttendance(Guid playerId);
+    public Task<EventAttendanceResponse> GetEventAttendance(Guid eventId);
     public Task SetAttendance(Guid eventId, Guid playerId, AttendanceStatus status, string? absenceReason = null);
+    public Task UpdateAttendance(Guid eventId, Guid playerId, AttendanceStatus status);
     public Task MarkPlayersPresent(Guid eventId, IEnumerable<Guid> playerIds);
     public Task RemoveAttendance(Guid eventId, Guid playerId);
 

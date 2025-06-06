@@ -1,3 +1,4 @@
+using ClanControlPanel.Api.Hubs;
 using ClanControlPanel.Application.Exceptions;
 using ClanControlPanel.Core.DTO;
 using ClanControlPanel.Core.Interfaces.Services;
@@ -5,13 +6,14 @@ using ClanControlPanel.Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ClanControlPanel.Api.Controllers
 {
     [Route("api/[controller]")]
     [Authorize(Roles = "Member, Moder, Admin")]
     [ApiController]
-    public class EventController(IEventService eventService) : ControllerBase
+    public class EventController(IEventService eventService, IHubContext<EventHub> hubContext) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetEvents()
@@ -39,6 +41,7 @@ namespace ClanControlPanel.Api.Controllers
         public async Task<IActionResult> AddEvent([FromBody] EventAddRequest eventAddRequest)
         {
             var eventId = await eventService.AddEvent(eventAddRequest.Date, eventAddRequest.EventTypeId, eventAddRequest.Status);
+            await hubContext.Clients.All.SendAsync("EventUpdated");
             return Ok(eventId);
         }
 
@@ -46,7 +49,8 @@ namespace ClanControlPanel.Api.Controllers
         public async Task<IActionResult> RemoveEvent(Guid eventId)
         {
             await eventService.RemoveEvent(eventId);
-            return NoContent();
+            await hubContext.Clients.All.SendAsync("EventUpdated");
+            return Ok();
         }
 
         [HttpGet("/api/Events/Attendances/Player/{playerId}")]
@@ -69,15 +73,28 @@ namespace ClanControlPanel.Api.Controllers
             [FromBody] AttendanceUpdateRequest dto)
         {
             await eventService.SetAttendance(eventId, playerId, dto.Status, dto.AbsenceReason);
-            return NoContent();
+            await hubContext.Clients.All.SendAsync("AttendanceUpdated");
+            return Ok();
         }
+        
+        [HttpPatch("{eventId:guid}/attendances/{playerId:guid}")]
+        [Authorize(Roles = "Moder, Admin")]
+        public async Task<IActionResult> UpdateAttendance(Guid eventId, Guid playerId,
+            [FromBody] AttendanceUpdateRequest status)
+        {
+            await eventService.SetAttendance(eventId, playerId, status.Status);
+            await hubContext.Clients.All.SendAsync("AttendanceUpdated");
+            return Ok();
+        }
+
 
         [HttpPost("{eventId:guid}/attendances/players/present")]
         [Authorize(Roles = "Moder, Admin")]
         public async Task<IActionResult> MarkPlayersPresent(Guid eventId, [FromBody] PlayerListRequest dto)
         {
             await eventService.MarkPlayersPresent(eventId, dto.PlayerIds);
-            return NoContent();
+            await hubContext.Clients.All.SendAsync("AttendanceUpdated");
+            return Ok();
         }
 
         [HttpDelete("{eventId:guid}/attendances/{playerId:guid}")]
@@ -85,7 +102,8 @@ namespace ClanControlPanel.Api.Controllers
         public async Task<IActionResult> RemoveAttendance(Guid eventId, Guid playerId)
         {
             await eventService.RemoveAttendance(eventId, playerId);
-            return NoContent();
+            await hubContext.Clients.All.SendAsync("AttendanceUpdated");
+            return Ok();
         }
         
         [HttpGet("{eventId:guid}/stages")]
@@ -100,6 +118,7 @@ namespace ClanControlPanel.Api.Controllers
         public async Task<IActionResult> AddStage(Guid eventId, [FromBody] EventStageAddRequest dto)
         {
             await eventService.AddEventStage(eventId, dto.StageNumber, dto.Amount, dto.Description);
+            await hubContext.Clients.All.SendAsync("EventUpdated");
             return Ok();
         }
 
@@ -108,7 +127,8 @@ namespace ClanControlPanel.Api.Controllers
         public async Task<IActionResult> UpdateStage(Guid stageId, [FromBody] EventStageUpdateRequest dto)
         {
             await eventService.UpdateEventStage(stageId, dto.Amount, dto.Description);
-            return NoContent();
+            await hubContext.Clients.All.SendAsync("EventUpdated");
+            return Ok();
         }
 
         [HttpDelete("stages/{stageId:guid}")]
@@ -116,7 +136,8 @@ namespace ClanControlPanel.Api.Controllers
         public async Task<IActionResult> DeleteStage(Guid stageId)
         {
             await eventService.RemoveEventStage(stageId);
-            return NoContent();
+            await hubContext.Clients.All.SendAsync("EventUpdated");
+            return Ok();
         }
     }
 }

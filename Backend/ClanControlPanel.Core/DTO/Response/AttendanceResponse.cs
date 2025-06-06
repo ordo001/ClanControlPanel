@@ -2,14 +2,12 @@ using ClanControlPanel.Core.Models;
 
 namespace ClanControlPanel.Core.DTO.Response;
 
-public class AttendanceDto
+public class AttendanceResponse
 {
-    public Guid Id { get; set; }
-    public Guid EventId { get; set; }
-    public string EventName { get; set; } = null!;
+    public Guid AttendanceId { get; set; }
     public Guid PlayerId { get; set; }
     public string PlayerName { get; set; } = null!;
-
+    public string SquadName { get; set; } = null!;
     public AttendanceStatus Attendance { get; set; }
     public string? AbsenceReason { get; set; }
 }

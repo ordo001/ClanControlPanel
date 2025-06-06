@@ -4,7 +4,7 @@ namespace ClanControlPanel.Api.Hubs;
 
 public class PlayerHub : Hub
 {
-    public async Task NotifyUsersUpdated()
+    public async Task NotifyPlayersUpdated()
     {
         await Clients.All.SendAsync("PlayersUpdated");
     }

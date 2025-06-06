@@ -13,7 +13,6 @@ namespace ClanControlPanel.Api.Controllers
     [ApiController]
     public class AuthController(IUserServices userServices) : ControllerBase
     {
-
         [HttpPost("/api/Auth")]
         public async Task<IActionResult> Login([FromBody] AuthRequest authRequest)
         {
@@ -28,10 +27,12 @@ namespace ClanControlPanel.Api.Controllers
             Response.Cookies.Append("JwtMonster", token, new CookieOptions
             {
                 HttpOnly = true,
-                Secure = true,
+                Secure = true, // Вырубить для http 
                 SameSite = SameSiteMode.None,
-                Expires = DateTimeOffset.UtcNow.AddDays(1)
+                Expires = DateTimeOffset.UtcNow.AddDays(7)
             });
+            
+            //Response.Cookies.Append("JwtMonster", token);
             
             return Ok(new {
                 token = token

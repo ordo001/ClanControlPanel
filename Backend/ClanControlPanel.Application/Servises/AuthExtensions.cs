@@ -38,7 +38,7 @@ namespace ClanControlPanel.Application.Servises
                     }
                 };
             });
-            serviceCollection.AddAuthentication();
+            //serviceCollection.AddAuthentication();
 
             return serviceCollection;
         }

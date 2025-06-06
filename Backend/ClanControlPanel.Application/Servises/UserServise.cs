@@ -51,7 +51,7 @@ namespace ClanControlPanel.Application.Servises
                 return tokenGenerator.GenerateToken(user);
             }
 
-            throw new Exception("Неверный логин или пароль");
+            throw new InvalidLoginOrPasswordException();
         }
 
         public async Task<string?> Register(string login, string password, string name, Role? role)

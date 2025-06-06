@@ -52,10 +52,15 @@ public class ExceptionMiddleware
                     response.StatusCode = StatusCodes.Status400BadRequest;
                     error.Message = "Сущность уже добавлена";
                     break;
+                
+                case  InvalidLoginOrPasswordException invalidLoginOrPasswordException:
+                    response.StatusCode = StatusCodes.Status401Unauthorized;
+                    error.Message = invalidLoginOrPasswordException.Message;
+                    break;
 
                 default:
                     response.StatusCode = StatusCodes.Status500InternalServerError;
-                    error.Message = "Server error\n";
+                    error.Message = "Server error: ";
                     error.Message += ex.Message;
                     break;
             }
