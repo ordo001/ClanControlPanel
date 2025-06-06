@@ -7,8 +7,8 @@ export default function Header({ children }) {
   const logout = useLogout();
   const navigate = useNavigate();
   return (
-    <header>
-      <div className="container">
+    <header className="header">
+      <div className="container-header">
         <div id="Name" onClick={() => navigate("/squads")}>
           Панель управления [SOWA]
         </div>

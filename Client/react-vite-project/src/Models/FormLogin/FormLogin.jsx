@@ -34,7 +34,7 @@ export default function FormLogin() {
         navigate("/squads");
       }
 
-      if (response.status === 404) {
+      if (response.status === 401) {
         setModalNotFound(true);
       }
 

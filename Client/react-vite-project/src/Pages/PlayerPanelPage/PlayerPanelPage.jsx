@@ -15,6 +15,7 @@ import Header from "../../Models/Header/Header";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function PlayerPanelPage() {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [players, setUsers] = useState([]);
   const [connection, setConnection] = useState(null);
@@ -143,16 +144,18 @@ export default function PlayerPanelPage() {
   return (
     <div>
       <Header>
-        <li>
-          <button
-            className="nav-button"
-            onClick={async (event) => {
-              navigate("/user-panel");
-            }}
-          >
-            Аккаунты
-          </button>
-        </li>
+        {user.role === "Admin" && (
+          <li>
+            <button
+              className="nav-button"
+              onClick={async (event) => {
+                navigate("/user-panel");
+              }}
+            >
+              Аккаунты
+            </button>
+          </li>
+        )}
         <li>
           <button
             className="nav-button"

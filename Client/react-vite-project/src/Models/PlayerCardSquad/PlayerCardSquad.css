@@ -1,26 +1,3 @@
-/* .player-card {
-  background-color: #555;
-  padding: 10px;
-  border-radius: 5px;
-  text-align: center;
-  color: #fff;
-  height: 22px;
-  transition: all 0.2s ease;
-} */
-
-/* .player-card:hover {
-  background-color: #777;
-  transform: scale(1.01);
-} */
-
-/* .empty-slot {
-  height: 22px;
-  background-color: #444;
-  border: 1px dashed #ac19d1;
-  border-radius: 6px;
-  opacity: 0.5;
-} */
-
 .player-card,
 .empty-slot {
   background-color: #555;
@@ -33,7 +10,7 @@
   align-items: center;
   justify-content: space-between;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 500;
   transition: all 0.2s ease;
 }
@@ -41,6 +18,10 @@
 .player-card:hover {
   background-color: #777;
   transform: scale(1.01);
+}
+
+.player-name {
+  font-size: 16px;
 }
 
 .empty-slot {

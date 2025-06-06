@@ -2,14 +2,67 @@ import { useEffect, useState } from "react";
 import "./EventItem.css";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../Func/useAuth";
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import axios from "axios";
 
-export default function EventItem({ event, stages, totalAmount }) {
+export default function EventItem({ event, stages, totalAmount, fetchEvents }) {
+  const { user } = useAuth();
+  const [connection, setConnection] = useState();
   const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleToggle = () => {
     setExpanded((prev) => !prev);
   };
+
+  const deleteEvent = async () => {
+    try {
+      const response = await axios.delete(
+        `${apiUrl}/api/Event/${event.idEvent}`,
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.status >= 200) {
+        console.log("aboba");
+        await fetchEvents();
+      }
+    } catch (err) {
+      console.error("Ошибка при удалении события:", err);
+    }
+  };
+
+  // useEffect(() => {
+  //   const newConnection = new HubConnectionBuilder()
+  //     .withUrl(`${apiUrl}/eventHub`)
+  //     .withAutomaticReconnect()
+  //     .build();
+
+  //   setConnection(newConnection);
+
+  //   newConnection
+  //     .start()
+  //     .then(() => console.log("SignalR Connected"))
+  //     .catch((err) => console.error("SignalR Connection Error: ", err));
+
+  //   return () => {
+  //     newConnection.stop();
+  //   };
+  // }, [apiUrl]);
+
+  // useEffect(() => {
+  //   if (connection) {
+  //     connection.on("EventUpdated", deleteEvent);
+  //   }
+
+  //   return () => {
+  //     if (connection) {
+  //       connection.off("EventUpdated");
+  //     }
+  //   };
+  // }, [connection, deleteEvent]);
 
   return (
     <div
@@ -44,14 +97,23 @@ export default function EventItem({ event, stages, totalAmount }) {
               : totalAmount.toLocaleString("ru-RU")}
           </span>
         </div>
-        {(event.eventTypeName === "Потасовка" ||
-          event.eventTypeName === "Турнир") && (
+        {event.eventTypeName === "Потасовка" ||
+        event.eventTypeName === "Турнир" ? (
           <div className="Buttons">
             <Button
               onClick={() => navigate(`/events/${event.idEvent}/attendances`)}
             >
               Посещаемость
             </Button>
+            {(user.role === "Moder" || user.role === "Admin") && (
+              <Button onClick={deleteEvent}>Удалить</Button>
+            )}
+          </div>
+        ) : (
+          <div className="Buttons">
+            {(user.role === "Moder" || user.role === "Admin") && (
+              <Button onClick={deleteEvent}>Удалить</Button>
+            )}
           </div>
         )}
       </div>

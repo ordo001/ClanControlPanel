@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import Header from "../../Models/Header/Header";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../../Func/Logout";
-import setIsAuthenticated from "../../Func/useAuth";
+import useAuth from "../../Func/useAuth";
 
 export default function SquadsPage() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const { user } = useAuth();
   const [squads, setSquads] = useState([]);
   const navigate = useNavigate();
   const [draggingFromId, setDraggingFromId] = useState(null);
@@ -38,7 +39,6 @@ export default function SquadsPage() {
             .filter((p) => p !== null)
             .sort((a, b) => a.position - b.position);
 
-          // Добавим null-слоты до 5 игроков
           while (sortedPlayers.length < 5) {
             sortedPlayers.push(null);
           }
@@ -139,30 +139,34 @@ export default function SquadsPage() {
     <>
       {/* <HeaderSquadsPage /> */}
       <Header>
+        {user.role === "Admin" && (
+          <li>
+            <button
+              className="nav-button"
+              onClick={async (event) => {
+                navigate("/user-panel");
+              }}
+            >
+              Аккаунты
+            </button>
+          </li>
+        )}
+        {(user.role === "Moder" || user.role === "Admin") && (
+          <li>
+            <button
+              className="nav-button"
+              onClick={async () => {
+                navigate("/player-panel");
+              }}
+            >
+              Состав
+            </button>
+          </li>
+        )}
         <li>
           <button
             className="nav-button"
-            onClick={async (event) => {
-              navigate("/user-panel");
-            }}
-          >
-            Аккаунты
-          </button>
-        </li>
-        <li>
-          <button
-            className="nav-button"
-            onClick={async (event) => {
-              navigate("/player-panel");
-            }}
-          >
-            Состав
-          </button>
-        </li>
-        <li>
-          <button
-            className="nav-button"
-            onClick={async (event) => {
+            onClick={async () => {
               navigate("/events");
             }}
           >

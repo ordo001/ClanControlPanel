@@ -4,114 +4,12 @@ import EventItem from "../../Models/EventItem/EventItem";
 import Header from "../../Models/Header/Header";
 import NewEventModal from "../../Models/NewEventModal/NewEventModal";
 import { useNavigate } from "react-router-dom";
-
-// export default function EventsPage() {
-//   const [events, setEvents] = useState([]);
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const navigate = useNavigate();
-//   const [stagesMap, setStagesMap] = useState({});
-//   const apiUrl = import.meta.env.VITE_API_URL;
-
-//   useEffect(() => {
-//     fetchEvents();
-//   }, []);
-
-//   const fetchEvents = async () => {
-//     try {
-//       const res = await axios.get(`${apiUrl}/api/Event`, {
-//         withCredentials: true,
-//       });
-//       const data = Array.isArray(res.data) ? res.data : [];
-
-//       const stagesData = await Promise.all(
-//         data.map((event) =>
-//           axios
-//             .get(`${apiUrl}/api/Event/${event.idEvent}/stages`, {
-//               withCredentials: true,
-//             })
-//             .then((res) => ({ eventId: event.idEvent, stages: res.data }))
-//         )
-//       );
-
-//       const stagesByEvent = {};
-//       stagesData.forEach(({ eventId, stages }) => {
-//         stagesByEvent[eventId] = stages;
-//       });
-
-//       setEvents(data);
-//       setStagesMap(stagesByEvent);
-//     } catch (error) {
-//       console.error("Ошибка при загрузке событий:", error);
-//       setEvents([]);
-//     }
-//   };
-
-//   const getTotalAmount = (stages) => {
-//     return stages.reduce((sum, s) => sum + s.amount, 0);
-//   };
-
-//   const getGlobalTotalAmount = () => {
-//     return Object.values(stagesMap)
-//       .flat()
-//       .reduce((sum, stage) => sum + stage.amount, 0);
-//   };
-
-//   return (
-//     <div>
-//       <NewEventModal
-//         open={isModalOpen}
-//         onClose={() => setIsModalOpen(false)}
-//         onSuccess={fetchEvents}
-//       />
-//       <Header>
-//         <li>
-//           <button
-//             className="nav-button"
-//             onClick={() => navigate("/user-panel")}
-//           >
-//             Аккаунты
-//           </button>
-//         </li>
-//         <li>
-//           <button className="nav-button" onClick={() => navigate("/squads")}>
-//             Отряды
-//           </button>
-//         </li>
-//       </Header>
-
-//       <div className="Info">Здесь отображаются все события</div>
-//       <div className="Info">
-//         Всего событий: {events.length} | Казна:{" "}
-//         {getGlobalTotalAmount().toLocaleString()}
-//       </div>
-
-//       <div className="User-container">
-//         <div className="Add-user" onClick={() => setIsModalOpen(true)}>
-//           + Новое событие
-//         </div>
-
-//         {events.length > 0 ? (
-//           events.map((event) => (
-//             <EventItem
-//               key={event.idEvent}
-//               event={event}
-//               stages={stagesMap[event.idEvent] || []}
-//               totalAmount={getTotalAmount(stagesMap[event.idEvent] || [])}
-//             />
-//           ))
-//         ) : (
-//           <p
-//             style={{ textAlign: "center", fontSize: "24px", marginTop: "20px" }}
-//           >
-//             Событий нет
-//           </p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import useAuth from "../../Func/useAuth";
 
 export default function EventsPage() {
+  const { user } = useAuth();
+  const [connection, setConnection] = useState(null);
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [stagesMap, setStagesMap] = useState({});
@@ -188,6 +86,36 @@ export default function EventsPage() {
 
   const uniqueEventTypes = [...new Set(events.map((e) => e.eventTypeName))];
 
+  useEffect(() => {
+    const newConnection = new HubConnectionBuilder()
+      .withUrl(`${apiUrl}/eventHub`)
+      .withAutomaticReconnect()
+      .build();
+
+    setConnection(newConnection);
+
+    newConnection
+      .start()
+      .then(() => console.log("SignalR Connected"))
+      .catch((err) => console.error("SignalR Connection Error: ", err));
+
+    return () => {
+      newConnection.stop();
+    };
+  }, [apiUrl]);
+
+  useEffect(() => {
+    if (connection) {
+      connection.on("EventUpdated", fetchEvents);
+    }
+
+    return () => {
+      if (connection) {
+        connection.off("EventUpdated");
+      }
+    };
+  }, [connection, fetchEvents]);
+
   return (
     <div>
       <NewEventModal
@@ -197,14 +125,26 @@ export default function EventsPage() {
       />
 
       <Header>
-        <li>
-          <button
-            className="nav-button"
-            onClick={() => navigate("/user-panel")}
-          >
-            Аккаунты
-          </button>
-        </li>
+        {user.role === "Admin" && (
+          <li>
+            <button
+              className="nav-button"
+              onClick={() => navigate("/user-panel")}
+            >
+              Аккаунты
+            </button>
+          </li>
+        )}
+        {(user.role === "Moder" || user.role === "Admin") && (
+          <li>
+            <button
+              className="nav-button"
+              onClick={() => navigate("/player-panel")}
+            >
+              Состав
+            </button>
+          </li>
+        )}
         <li>
           <button className="nav-button" onClick={() => navigate("/squads")}>
             Отряды
@@ -265,6 +205,7 @@ export default function EventsPage() {
             <EventItem
               key={event.idEvent}
               event={event}
+              fetchEvents={fetchEvents}
               stages={stagesMap[event.idEvent] || []}
               totalAmount={getTotalAmount(stagesMap[event.idEvent] || [])}
             />

@@ -1,17 +1,24 @@
-.container {
+.container-header {
   margin: 0 auto;
   padding: 0 20px;
   overflow: hidden;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
 }
 
 #root {
   margin: 0px;
 }
 
-header {
+.header {
   background-color: #333;
   color: #fff;
-  padding: 15px 0;
+  height: 60px;
+  padding-top: 30px;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
 }
 
 #Name {
